@@ -1,0 +1,24 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        name 'm2-dv8tion'
+        url 'https://m2.dv8tion.net/releases'
+    }
+}
+
+dependencies {
+    implementation 'net.dv8tion:JDA:4.3.0_281'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+}
+
+application {
+    mainClassName = 'Main'
+}
