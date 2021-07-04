@@ -11,6 +11,8 @@ public class Setting {
     // Settings imported from config.properties resource
     public static String PREFIX = "";
     public static OnlineStatus STATUS = OnlineStatus.UNKNOWN;
+    public static double DAD_BOT_CHANCE = -1;
+
     private final static Properties properties = new Properties();
 
     private static final Logger LOG = JDALogger.getLog(Setting.class);
@@ -25,6 +27,7 @@ public class Setting {
 
             PREFIX = properties.getProperty("prefix");
             STATUS = OnlineStatus.fromKey(properties.getProperty("status"));
+            DAD_BOT_CHANCE = Double.parseDouble(properties.getProperty("dad_bot_chance"));
 
             LOG.info("Loaded settings from config.properties.");
 

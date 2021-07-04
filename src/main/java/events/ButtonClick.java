@@ -2,6 +2,7 @@ package events;
 
 import main.Discord;
 import main.Main;
+import main.Setting;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Message;
@@ -66,6 +67,8 @@ public class ButtonClick extends ListenerAdapter {
             // Attempt to update status, modify buttons, and send reply
             try {
                 presence.setStatus(newStatus);
+                Setting.STATUS = newStatus;
+                Setting.saveSettings();
 
                 Message oldMessage = event.getMessage();
                 assert oldMessage != null;

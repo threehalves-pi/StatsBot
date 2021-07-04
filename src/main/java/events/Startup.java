@@ -80,6 +80,7 @@ public class Startup extends ListenerAdapter {
                         false),
                 new MessageEmbed.Field("Settings",
                         getCheckLine("Prefix", !Setting.PREFIX.equals("")) + "\n" +
+                        getCheckLine("Dad bot", Setting.DAD_BOT_CHANCE != -1) + "\n" +
                         getCheckLine("Status", Setting.STATUS != OnlineStatus.UNKNOWN), false)
         );
 

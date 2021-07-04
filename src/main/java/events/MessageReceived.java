@@ -71,7 +71,7 @@ public class MessageReceived extends ListenerAdapter {
         else if (message.toLowerCase(Locale.ROOT).startsWith("im "))
             name = message.substring(3);
 
-        if (name != null && Math.random() < 0.01) {
+        if (name != null && Math.random() < Setting.DAD_BOT_CHANCE) {
             event.getMessage().reply("Hi " + name + ", I'm StatsBot!").queue();
             return true;
         }
