@@ -4,6 +4,7 @@ import main.ID;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.User;
 
 public class EventUtils {
     /**
@@ -34,6 +35,20 @@ public class EventUtils {
         }
 
         // If channel is unknown, do NOT ignore it
+        return false;
+    }
+
+    /**
+     * Determines if the given user has authority to perform administrative actions. An adminster is defined as a
+     * Discord user whose unique ID is listed in {@link ID#ADMINS}.
+     *
+     * @param user the given user to test
+     * @return true if the user is an admin; false otherwise
+     */
+    public static boolean isAdmin(User user) {
+        for (long l : ID.ADMINS)
+            if (user.getIdLong() == l)
+                return true;
         return false;
     }
 }
