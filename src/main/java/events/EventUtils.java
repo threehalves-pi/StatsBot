@@ -39,7 +39,7 @@ public class EventUtils {
     }
 
     /**
-     * Determines if the given user has authority to perform administrative actions. An adminster is defined as a
+     * Determines if the given user has authority to perform administrative actions. An administrator is defined as a
      * Discord user whose unique ID is listed in {@link ID#ADMINS}.
      *
      * @param user the given user to test

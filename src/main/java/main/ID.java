@@ -1,7 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-
 /**
  * Contains static long Discord IDs for various channels, guilds, and users.
  */
