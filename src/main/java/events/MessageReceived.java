@@ -1,5 +1,6 @@
 package events;
 
+import announcements.Announcements;
 import main.ID;
 import main.Setting;
 import net.dv8tion.jda.api.entities.Message;
@@ -18,6 +19,14 @@ public class MessageReceived extends ListenerAdapter {
      */
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        // Ignore messages from myself
+        if (event.getAuthor().getIdLong() == ID.SELF)
+            return;
+
+        // Whenever a message is sent in the announcements channel, the timer must be reset
+        if (event.getChannel().getIdLong() == Setting.ANNOUNCEMENT_CHANNEL)
+            Announcements.resetTimer();
+
         if (isMentioned(event))
             return;
 
@@ -28,7 +37,7 @@ public class MessageReceived extends ListenerAdapter {
             return;
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase(Setting.PREFIX + "help"))
-            event.getMessage().reply("Hi, I'm StatsBot. I'm currently under development. " +
+            event.getMessage().reply("Hi, I'm Stats Bot. I'm currently under development. " +
                     "Check back another time for a full command list and useful features.").queue();
     }
 

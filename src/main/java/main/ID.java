@@ -25,6 +25,7 @@ public class ID {
     // Discord users
     public static final long SELF = 790441917070311505L;
     public static final long SIMON = 314889189856378882L;
+    public static final long AP_BOT = 591496469983526933L;
 
     // Admin users
     public static final Long[] ADMINS = {SELF, SIMON};

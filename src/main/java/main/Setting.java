@@ -13,8 +13,19 @@ public class Setting {
     public static OnlineStatus STATUS = OnlineStatus.UNKNOWN;
     public static double DAD_BOT_CHANCE = -1;
 
-    private final static Properties properties = new Properties();
+    public static int ANNOUNCEMENT_DELAY = -1;
+    public static int ANNOUNCEMENT_MESSAGES_CHECK = -1;
+    public static String SURVEY_LINK = "";
+    public static String FAQ_LINK = "";
+    public static String ASKING_QUESTIONS_FAQ_LINK = "";
 
+
+    // Manually adjusted settings within code
+    public static final long ANNOUNCEMENT_CHANNEL = ID.AP_STATS_CHANNEL;
+
+
+    // Setting control variables
+    private final static Properties properties = new Properties();
     private static final Logger LOG = JDALogger.getLog(Setting.class);
 
     /**
@@ -28,6 +39,12 @@ public class Setting {
             PREFIX = properties.getProperty("prefix");
             STATUS = OnlineStatus.fromKey(properties.getProperty("status"));
             DAD_BOT_CHANCE = Double.parseDouble(properties.getProperty("dad_bot_chance"));
+
+            ANNOUNCEMENT_DELAY = Integer.parseInt(properties.getProperty("announcement_delay"));
+            ANNOUNCEMENT_MESSAGES_CHECK = Integer.parseInt(properties.getProperty("announcement_messages_check"));
+            SURVEY_LINK = properties.getProperty("survey_link");
+            FAQ_LINK = properties.getProperty("faq_link");
+            ASKING_QUESTIONS_FAQ_LINK = properties.getProperty("asking_questions_faq_link");
 
             LOG.info("Loaded settings from config.properties.");
 

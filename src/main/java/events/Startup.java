@@ -1,5 +1,6 @@
 package events;
 
+import announcements.Announcements;
 import commands.CommandsRegister;
 import main.*;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 
 public class Startup extends ListenerAdapter {
     private static final Logger LOG = JDALogger.getLog(Startup.class);
+
     /**
      * When bot starts up, locate necessary Discord entities
      *
@@ -33,7 +35,11 @@ public class Startup extends ListenerAdapter {
         // Register Guild-specific slash commands
         CommandsRegister.registerAdminSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
 
+        // Initiate announcement timer
+        Announcements.initiateTimer();
+
         LOG.info("Finished startup!");
+        System.out.println();
     }
 
     private void printStartupLog() {
@@ -67,21 +73,29 @@ public class Startup extends ListenerAdapter {
                 Colors.ADMIN,
                 new MessageEmbed.Field("AP Students",
                         getCheckLine("Server", Discord.AP_STUDENTS != null) + "\n" +
-                                getCheckLine("#apstats channel", APStatsChannel) + "\n" +
-                                getCheckLine("#bot-commands channel", botCommandsChannel), false),
+                        getCheckLine("#apstats channel", APStatsChannel) + "\n" +
+                        getCheckLine("#bot-commands channel", botCommandsChannel),
+                        false),
                 new MessageEmbed.Field("StatsBot Central",
                         getCheckLine("Server", Discord.STATSBOT_CENTRAL != null) + "\n" +
-                                getCheckLine("#ap-stats channel", APStatsStatsBotChannel) + "\n" +
-                                getCheckLine("#startup-log", Discord.STARTUP_LOG != null) + "\n" +
-                                getCheckLine("#private-testing channel", privateTestingChannel), false),
+                        getCheckLine("#ap-stats channel", APStatsStatsBotChannel) + "\n" +
+                        getCheckLine("#startup-log", Discord.STARTUP_LOG != null) + "\n" +
+                        getCheckLine("#private-testing channel", privateTestingChannel),
+                        false),
                 new MessageEmbed.Field("Users",
                         getCheckLine("Myself", true) + "\n" +
-                                getCheckLine("Simo\u03c0", Discord.SIMON != null),
+                        getCheckLine("Simo\u03c0", Discord.SIMON != null),
                         false),
                 new MessageEmbed.Field("Settings",
                         getCheckLine("Prefix", !Setting.PREFIX.equals("")) + "\n" +
+                        getCheckLine("Status", Setting.STATUS != OnlineStatus.UNKNOWN) + "\n" +
                         getCheckLine("Dad bot", Setting.DAD_BOT_CHANCE != -1) + "\n" +
-                        getCheckLine("Status", Setting.STATUS != OnlineStatus.UNKNOWN), false)
+                        getCheckLine("Survey link", !Setting.SURVEY_LINK.equals("")) + "\n" +
+                        getCheckLine("FAQ link", !Setting.FAQ_LINK.equals("")) + "\n" +
+                        getCheckLine("Questions link", !Setting.ASKING_QUESTIONS_FAQ_LINK.equals("")) + "\n" +
+                        getCheckLine("Timer delay", Setting.ANNOUNCEMENT_DELAY != -1) + "\n" +
+                        getCheckLine("Messages check", Setting.ANNOUNCEMENT_MESSAGES_CHECK != -1),
+                        false)
         );
 
         if (Discord.STARTUP_LOG == null)
