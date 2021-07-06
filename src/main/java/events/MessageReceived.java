@@ -93,8 +93,8 @@ public class MessageReceived extends ListenerAdapter {
     }
 
     /**
-     * Checks if a message contains the {@link Setting#SURVEY_LINK}. If it does, a reply will be sent stating that Stats Bot
-     * endorses this message. The bot will proceed to send the link as well because spamming the survey link is fun
+     * Checks if a message equals the {@link Setting#SURVEY_TEMPLATE}. If it does, a "thumbs up" reaction will be added
+     * indicating endorsement for the message
      *
      * @param event The {@link MessageReceivedEvent}
      * @return If a survey link was indeed found, true will be returned
@@ -102,11 +102,8 @@ public class MessageReceived extends ListenerAdapter {
     private boolean checkSurveyLink(MessageReceivedEvent event) {
         Message message = event.getMessage();
 
-        if(message.getContentRaw().contains(Setting.SURVEY_LINK)) {
-            event.getMessage().reply(
-                    "This message is endorsed by me, " + Main.jda.getSelfUser().getAsMention() + ". " +
-                    "Oh also if you didn't already you should take this fantastic survey: " + Setting.SURVEY_LINK
-            ).mentionRepliedUser(false).queue();
+        if(message.getContentStripped().equals(Setting.SURVEY_TEMPLATE)) {
+            event.getMessage().addReaction("\uD83D\uDC4D").queue();
             return true;
         }
 
