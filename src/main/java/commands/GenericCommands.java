@@ -9,7 +9,7 @@ public class GenericCommands {
     }
 
     /**
-     * Returns the {@link Setting#SURVEY_LINK} when the <b>/survey</b> command is used
+     * Responds with the {@link Setting#SURVEY_LINK} when the <b>/survey</b> command is used
      *
      * @param event The {@link SlashCommandEvent}
      */
