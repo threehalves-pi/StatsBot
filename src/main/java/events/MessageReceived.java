@@ -2,6 +2,7 @@ package events;
 
 import announcements.Announcements;
 import main.ID;
+import main.Main;
 import main.Setting;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -34,6 +35,9 @@ public class MessageReceived extends ListenerAdapter {
             return;
 
         if (checkDadBot(event))
+            return;
+
+        if(checkSurveyLink(event))
             return;
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase(Setting.PREFIX + "help"))
@@ -82,6 +86,27 @@ public class MessageReceived extends ListenerAdapter {
 
         if (name != null && Math.random() < Setting.DAD_BOT_CHANCE) {
             event.getMessage().reply("Hi " + name + ", I'm StatsBot!").queue();
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a message contains the {@link Setting#SURVEY_LINK}. If it does, a reply will be sent stating that Stats Bot
+     * endorses this message. The bot will proceed to send the link as well because spamming the survey link is fun
+     *
+     * @param event The {@link MessageReceivedEvent}
+     * @return If a survey link was indeed found, true will be returned
+     */
+    private boolean checkSurveyLink(MessageReceivedEvent event) {
+        Message message = event.getMessage();
+
+        if(message.getContentRaw().contains(Setting.SURVEY_LINK)) {
+            event.getMessage().reply(
+                    "This message is endorsed by me, " + Main.jda.getSelfUser().getAsMention() + ". " +
+                    "Oh also if you didn't already you should take this fantastic survey: " + Setting.SURVEY_LINK
+            ).mentionRepliedUser(false).queue();
             return true;
         }
 

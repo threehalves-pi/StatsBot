@@ -10,7 +10,8 @@ public class CommandsRegister {
      */
     public static void registerGlobalSlashCommands(CommandListUpdateAction commands) {
         commands.addCommands(
-                new CommandData("statsbot", "Says hello to StatsBot")
+                new CommandData("statsbot", "Says hello to StatsBot"),
+                new CommandData("survey", "Gets the AP Stats survey link")
         ).queue();
     }
 
