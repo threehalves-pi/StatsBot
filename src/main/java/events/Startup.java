@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.internal.utils.JDALogger;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -26,6 +27,12 @@ public class Startup extends ListenerAdapter {
         // Import config settings
         Setting.importSettings();
 
+        // Update commands if enabled
+        if(Setting.RELOAD_COMMANDS) {
+            CommandListUpdateAction globalCommands = Main.jda.updateCommands();
+            CommandsRegister.registerGlobalSlashCommands(globalCommands);
+        }
+
         // Set status
         Main.jda.getPresence().setStatus(Setting.STATUS);
 
@@ -33,7 +40,8 @@ public class Startup extends ListenerAdapter {
         printStartupLog();
 
         // Register Guild-specific slash commands
-        CommandsRegister.registerAdminSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
+        if(Setting.RELOAD_COMMANDS)
+            CommandsRegister.registerAdminSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
 
         // Initiate announcement timer
         Announcements.initiateTimer();

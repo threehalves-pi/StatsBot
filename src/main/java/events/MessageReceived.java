@@ -41,8 +41,8 @@ public class MessageReceived extends ListenerAdapter {
             return;
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase(Setting.PREFIX + "help"))
-            event.getMessage().reply("Hi, I'm Stats Bot. I'm currently under development. " +
-                    "Check back another time for a full command list and useful features.").queue();
+            event.getMessage().reply("This command is \"depreciated\" in favor of the new `/help` command. " +
+                    "Please use that command instead of this one.").queue();
     }
 
     /**

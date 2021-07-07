@@ -14,6 +14,7 @@ public class SlashCommand extends ListenerAdapter {
             case "statsbot" -> GenericCommands.statsbotSlashCommand(event);
             case "panel" -> AdminCommands.runControlPanel(event);
             case "survey" -> GenericCommands.surveySlashCommand(event);
+            case "help" -> GenericCommands.helpGeneric(event);
             default -> event
                     .reply("Sorry, I can't handle that command right now. Try again later.")
                     .setEphemeral(true)
