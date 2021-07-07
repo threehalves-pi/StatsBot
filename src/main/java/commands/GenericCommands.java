@@ -31,7 +31,7 @@ public class GenericCommands {
         EmbedBuilder embed = Utils.buildEmbed(
                 "Filler Title",
                 "Hi, I'm **Stats Bot**, a bot designed by <@" + ID.SIMON + "> to provide utilities " +
-                        "and assistance to AP Statistics students. Want to lean more? Continue reading!",
+                        "and assistance to AP Statistics students. Want to learn more? Continue reading!",
                 Colors.TURQUOISE,
                 "I'm open source! Click on the blue title of this embed to see the Github Repository to learn more about who helped " +
                         "make me. Furthermore, you could help contribute to improve me and get features you want to see added!",
@@ -45,7 +45,7 @@ public class GenericCommands {
                 Utils.makeField(
                         "Searching for General AP Statistics Help?",
                         "Want to know the best resources for studying AP Statistics? Or how much time you should spend studying? " +
-                                "The questions, and many more, can all be answered using [this FAQ](https://bit.ly/apstats-faq) using " +
+                                "Those questions, and many more, can all be answered using [this FAQ](https://bit.ly/apstats-faq) created using " +
                                 "responses collected from hundreds of past AP Statistics students. Psst, you can contribute by taking " +
                                 "[this survey](https://bit.ly/apstat-survey)!",
                         false

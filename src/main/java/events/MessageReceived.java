@@ -56,7 +56,7 @@ public class MessageReceived extends ListenerAdapter {
         Message message = event.getMessage();
 
         if (message.getContentRaw().equals("<@!" + ID.SELF + ">")) {
-            message.reply("Hi, my prefix is `" + Setting.PREFIX + "`.").queue();
+            message.reply("Hi, my prefix is `" + Setting.PREFIX + "`. You can also use `/help` for more info.").queue();
             return true;
         }
 
