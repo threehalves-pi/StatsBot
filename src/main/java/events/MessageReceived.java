@@ -2,6 +2,7 @@ package events;
 
 import announcements.Announcements;
 import main.ID;
+import main.Main;
 import main.Setting;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -34,6 +35,9 @@ public class MessageReceived extends ListenerAdapter {
             return;
 
         if (checkDadBot(event))
+            return;
+
+        if(checkSurveyLink(event))
             return;
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase(Setting.PREFIX + "help"))
@@ -82,6 +86,24 @@ public class MessageReceived extends ListenerAdapter {
 
         if (name != null && Math.random() < Setting.DAD_BOT_CHANCE) {
             event.getMessage().reply("Hi " + name + ", I'm StatsBot!").queue();
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Checks if a message equals the {@link Setting#SURVEY_TEMPLATE}. If it does, a "thumbs up" reaction will be added
+     * indicating endorsement for the message
+     *
+     * @param event The {@link MessageReceivedEvent}
+     * @return If a survey link was indeed found, true will be returned
+     */
+    private boolean checkSurveyLink(MessageReceivedEvent event) {
+        Message message = event.getMessage();
+
+        if(message.getContentStripped().equals(Setting.SURVEY_TEMPLATE)) {
+            event.getMessage().addReaction("\uD83D\uDC4D").queue();
             return true;
         }
 

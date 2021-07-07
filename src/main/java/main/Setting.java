@@ -18,6 +18,7 @@ public class Setting {
     public static String SURVEY_LINK = "";
     public static String FAQ_LINK = "";
     public static String ASKING_QUESTIONS_FAQ_LINK = "";
+    public static String SURVEY_TEMPLATE = "";
 
 
     // Manually adjusted settings within code
@@ -45,6 +46,7 @@ public class Setting {
             SURVEY_LINK = properties.getProperty("survey_link");
             FAQ_LINK = properties.getProperty("faq_link");
             ASKING_QUESTIONS_FAQ_LINK = properties.getProperty("asking_questions_faq_link");
+            SURVEY_TEMPLATE = properties.getProperty("survey-template");
 
             LOG.info("Loaded settings from config.properties.");
 
