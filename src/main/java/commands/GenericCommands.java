@@ -80,9 +80,10 @@ public class GenericCommands {
 
     public static void source(SlashCommandEvent event) {
         EmbedBuilder embed = Utils.buildEmbed(
-                "AP Stats Bot - Source",
-                "Stats Bot is completely open source. We welcome general suggestions, simple bug fixes, " +
-                "and even significant code contributions. Check out the code [on github](" + Setting.GITHUB_LINK + ").",
+                "Source Code",
+                Utils.mentionMe() + " is completely open source. We welcome general suggestions, " +
+                "simple bug fixes, and significant feature contributions. " +
+                "Check out the code [on github](" + Setting.GITHUB_LINK + ").",
                 Colors.INFO,
                 "Want to see your name on the developer list? Make a pull request on github!",
                 Utils.makeField(
@@ -94,7 +95,7 @@ public class GenericCommands {
         MessageBuilder message = new MessageBuilder();
 
         message.setEmbeds(embed.build());
-        message.setActionRows(ActionRow.of(Button.link(Setting.GITHUB_LINK, "Go to Github")));
+        message.setActionRows(ActionRow.of(Button.link(Setting.GITHUB_LINK, "Stats Bot on Github")));
 
         event.reply(message.build()).setEphemeral(true).queue();
     }
