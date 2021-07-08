@@ -7,6 +7,8 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;
 
+import java.time.Instant;
+
 public class GenericCommands {
     public static void statsbot(SlashCommandEvent event) {
         event.reply("Hi!").setEphemeral(true).queue();
@@ -43,15 +45,15 @@ public class GenericCommands {
                 ),
                 Utils.makeField(
                         "Developers",
-                        "Making AP Stats Bot is a collaborative effort. This project, along with the popular " +
-                        "[survey](" + Setting.SURVEY_LINK + ") and [FAQ](" + Setting.FAQ_LINK + "), was created by " +
-                        Utils.mention(ID.SIMON)),
+                        "Making AP Stats Bot is a [collaborative](" + Setting.GITHUB_LINK + ") effort. This " +
+                        "project—along with the popular [survey](" + Setting.SURVEY_LINK + ") and " +
+                        "[FAQ](" + Setting.FAQ_LINK + ")—was created by " + Utils.mention(ID.SIMON) + "."),
                 Utils.makeField(
                         "Acknowledgements",
                         "Many thanks to " + Utils.mention(ID.NOTSMART) + ", " + Utils.mention(ID.BLU) + ", " +
                         Utils.mention(ID.LANCE) + ", " + Utils.mention(ID.SNOWFLAKE) + ", " +
                         Utils.mention(ID.ZENITH) + ", and " + Utils.mention(ID.SHADOW) +
-                        " for their contributions, suggestions, and feedback for Stats Bot."
+                        " for their contributions, suggestions, and feedback."
                 ),
                 Utils.makeField(
                         "Other Info",
@@ -66,11 +68,12 @@ public class GenericCommands {
                 ),
                 Utils.makeField(
                         "Version",
-                        "[Current version](" + Setting.GITHUB_LINK + "): `" + Setting.VERSION + "`.",
+                        "[Current](" + Setting.GITHUB_LINK + ") running version: `" + Setting.VERSION + "`.",
                         true
                 )
 
-        );
+        )
+                .setTimestamp(Instant.now());
 
         event.replyEmbeds(embed.build()).setEphemeral(true).queue();
     }
