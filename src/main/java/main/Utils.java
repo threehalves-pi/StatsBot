@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;
 import org.jetbrains.annotations.NotNull;
@@ -128,12 +129,32 @@ public class Utils {
      * sending.
      *
      * @param embedBuilder the existing embed to send
-     * @param url the destination url for the button
-     * @param text the text on the button
+     * @param url          the destination url for the button
+     * @param text         the text on the button
      * @return the embed wrapped and built in a {@link Message} instance, with a link button at the end.
      */
     public static Message addLinkButton(
             @NotNull EmbedBuilder embedBuilder, @NotNull String url, @NotNull String text) {
         return addLinkButton(new MessageBuilder().setEmbeds(embedBuilder.build()), url, text);
+    }
+
+    /**
+     * This is a convenience method to send an ephemeral reply to a slash command.
+     *
+     * @param event   the slash command event to reply to
+     * @param message the message to send
+     */
+    public static void replyEphemeral(SlashCommandEvent event, Message message) {
+        event.reply(message).setEphemeral(true).queue();
+    }
+
+    /**
+     * This is a convenience method to send an ephemeral reply to a slash command.
+     *
+     * @param event the slash command event to reply to
+     * @param embed the message to send
+     */
+    public static void replyEphemeral(SlashCommandEvent event, EmbedBuilder embed) {
+        event.replyEmbeds(embed.build()).setEphemeral(true).queue();
     }
 }
