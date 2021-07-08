@@ -2,11 +2,13 @@ package commands;
 
 import main.*;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.entities.MessageEmbed;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
+import net.dv8tion.jda.api.interactions.components.Button;
 
 public class GenericCommands {
-    public static void statsbotSlashCommand(SlashCommandEvent event) {
+    public static void statsbot(SlashCommandEvent event) {
         event.reply("Hi!").setEphemeral(true).queue();
     }
 
@@ -15,10 +17,10 @@ public class GenericCommands {
      *
      * @param event The {@link SlashCommandEvent}
      */
-    public static void surveySlashCommand(SlashCommandEvent event) {
+    public static void survey(SlashCommandEvent event) {
         event.reply("Do you want to help out future AP Statistics students? If you answered yes to that " +
-                "question you should take the fantastic survey designed to do just that: <" + Setting.SURVEY_LINK + ">. " +
-                "Even if you answered no to that question you should still take it anyways."
+                    "question you should take the fantastic survey designed to do just that: <" + Setting.SURVEY_LINK + ">. " +
+                    "Even if you answered no to that question you should still take it anyways."
         ).queue();
     }
 
@@ -27,44 +29,69 @@ public class GenericCommands {
      *
      * @param event The {@link SlashCommandEvent}
      */
-    public static void helpGeneric(SlashCommandEvent event) {
+    public static void help(SlashCommandEvent event) {
         EmbedBuilder embed = Utils.buildEmbed(
-                "Filler Title",
-                "Hi, I'm **AP Stats Bot**, a bot designed by <@" + ID.SIMON + "> to provide utilities " +
-                        "and assistance to AP Statistics students. Want to learn more? Continue reading!",
+                "AP Stats Bot - Info",
+                "Hi, I'm **Stats Bot**, a custom Discord bot designed to help AP students with statistics.",
                 Colors.INFO,
-                "I'm open source! Click on the blue title of this embed to see the Github Repository to learn more about who helped " +
-                        "make me. Furthermore, you could help contribute to improve me and get features you want to see added!",
+                "I'm open source! Type /source for more info.",
                 Utils.makeField(
                         "Commands",
-                        "Currently, the only commands available are accessible using **slash commands**, which is what " +
-                                "you used to see this help menu. As development continues, more commands and other useful features " +
-                                "will be added so check back later.",
-                        false
+                        "Currently, I only support slash commands (that's what you used to see this panel). " +
+                        "I'm still under development though, so check back later for new features."
                 ),
                 Utils.makeField(
-                        "Searching for General AP Statistics Help?",
-                        "Want to know the best resources for studying AP Statistics? Or how much time you should spend studying? " +
-                                "Those questions, and many more, can all be answered using [this FAQ](https://bit.ly/apstats-faq) created using " +
-                                "responses collected from hundreds of past AP Statistics students. Psst, you can contribute by taking " +
-                                "[this survey](https://bit.ly/apstat-survey)!",
-                        false
+                        "Other Info",
+                        "For answers to plenty of frequently asked questions, check out [this document](" +
+                        Setting.FAQ_LINK + ") from the channel pins. And in case you missed it, don't forget to take " +
+                        "[this survey](" + Setting.SURVEY_LINK + ") for AP Statistics students."
+                ),
+                Utils.makeField(
+                        "Developers",
+                        "Making AP Stats Bot is a collaborative effort. This project, along with the popular " +
+                        "[survey](" + Setting.SURVEY_LINK + ") and [FAQ](" + Setting.FAQ_LINK + "), was created by " +
+                        Utils.mention(ID.SIMON)),
+                Utils.makeField(
+                        "Acknowledgements",
+                        "Many thanks to " + Utils.mention(ID.NOTSMART) + ", " + Utils.mention(ID.BLU) + ", " +
+                        Utils.mention(ID.LANCE) + ", " + Utils.mention(ID.SNOWFLAKE) + ", " +
+                        Utils.mention(ID.ZENITH) + ", and " + Utils.mention(ID.SHADOW) +
+                        " for their contributions, suggestions, and feedback for Stats Bot."
                 ),
                 Utils.makeField(
                         "Prefix",
-                        "My prefix for running certain commands is `" + Setting.PREFIX + "`.",
+                        "My prefix is `" + Setting.PREFIX + "`.",
                         true
                 ),
                 Utils.makeField(
                         "Version",
-                        "I am currently running on version `" + Setting.VERSION + "`.",
+                        "[Current version](" + Setting.GITHUB_LINK + "): `" + Setting.VERSION + "`.",
                         true
                 )
 
         );
 
-        embed.setTitle("AP Stats Bot Help", "https://github.com/threehalves-pi/StatsBot");
-
         event.replyEmbeds(embed.build()).setEphemeral(true).queue();
+    }
+
+    public static void source(SlashCommandEvent event) {
+        EmbedBuilder embed = Utils.buildEmbed(
+                "AP Stats Bot - Source",
+                "Stats Bot is completely open source. We welcome general suggestions, simple bug fixes, " +
+                "and even significant code contributions. Check out the code [on github](" + Setting.GITHUB_LINK + ").",
+                Colors.INFO,
+                "Want to see your name on the developer list? Make a pull request on github!",
+                Utils.makeField(
+                        "Developers",
+                        Utils.mention(ID.SIMON) + " - Founder and lead developer\n" +
+                        Utils.mention(ID.NOTSMART) + " - Minor feature contributor")
+        );
+
+        MessageBuilder message = new MessageBuilder();
+
+        message.setEmbeds(embed.build());
+        message.setActionRows(ActionRow.of(Button.link(Setting.GITHUB_LINK, "Go to Github")));
+
+        event.reply(message.build()).setEphemeral(true).queue();
     }
 }

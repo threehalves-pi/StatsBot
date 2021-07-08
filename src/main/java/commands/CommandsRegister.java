@@ -12,7 +12,8 @@ public class CommandsRegister {
         commands.addCommands(
                 new CommandData("statsbot", "Says hello to StatsBot"),
                 new CommandData("survey", "Gets the AP Stats survey link"),
-                new CommandData("help", "The generic help command for Stats Bot")
+                new CommandData("help", "The generic help command for Stats Bot"),
+                new CommandData("source", "See the source code for Stats Bot")
         ).queue();
     }
 

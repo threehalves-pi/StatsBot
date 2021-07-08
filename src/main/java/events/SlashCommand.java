@@ -11,10 +11,11 @@ public class SlashCommand extends ListenerAdapter {
 
         // Determine which slash command was called
         switch (event.getName()) {
-            case "statsbot" -> GenericCommands.statsbotSlashCommand(event);
+            case "statsbot" -> GenericCommands.statsbot(event);
             case "panel" -> AdminCommands.runControlPanel(event);
-            case "survey" -> GenericCommands.surveySlashCommand(event);
-            case "help" -> GenericCommands.helpGeneric(event);
+            case "survey" -> GenericCommands.survey(event);
+            case "help" -> GenericCommands.help(event);
+            case "source" -> GenericCommands.source(event);
             default -> event
                     .reply("Sorry, I can't handle that command right now. Try again later.")
                     .setEphemeral(true)

@@ -25,6 +25,12 @@ public class ID {
     // Discord users
     public static final long SELF = 790441917070311505L;
     public static final long SIMON = 314889189856378882L;
+    public static final long NOTSMART = 396725430108946454L;
+    public static final long BLU = 308243811224780810L;
+    public static final long LANCE = 422361763812605952L;
+    public static final long SNOWFLAKE = 476612670385029133L;
+    public static final long ZENITH = 185836781323812875L;
+    public static final long SHADOW = 573659503237529642L;
     public static final long AP_BOT = 591496469983526933L;
 
     // Admin users

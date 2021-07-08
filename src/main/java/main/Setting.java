@@ -23,6 +23,7 @@ public class Setting {
     public static String ASKING_QUESTIONS_FAQ_LINK = "";
     public static String SURVEY_TEMPLATE = "";
 
+    public static String GITHUB_LINK = "";
 
     // Manually adjusted settings within code
     public static final long ANNOUNCEMENT_CHANNEL = ID.AP_STATS_CHANNEL;
@@ -52,7 +53,9 @@ public class Setting {
             SURVEY_LINK = properties.getProperty("survey_link");
             FAQ_LINK = properties.getProperty("faq_link");
             ASKING_QUESTIONS_FAQ_LINK = properties.getProperty("asking_questions_faq_link");
-            SURVEY_TEMPLATE = properties.getProperty("survey-template");
+            SURVEY_TEMPLATE = properties.getProperty("survey_template");
+
+            GITHUB_LINK = properties.getProperty("github_link");
 
             LOG.info("Loaded settings from config.properties.");
 

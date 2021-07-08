@@ -79,4 +79,13 @@ public class Utils {
     public static MessageEmbed.Field makeField(String name, String value, boolean inline) {
         return new MessageEmbed.Field(name, value, inline);
     }
+
+    /**
+     * This returns a string for mentioning users based on their Discord id.
+     * @param id the Discord id of the user to mention
+     * @return a string that mentions the user
+     */
+    public static String mention(long id) {
+        return "<@" + id + ">";
+    }
 }
