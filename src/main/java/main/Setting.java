@@ -66,7 +66,11 @@ public class Setting {
 
     /**
      * Saves the current settings to the config.properties file.
+     *
+     * Deprecated due to annoyingly overwriting comments in config.properties on save. Scheduled for eventual
+     * removal and transfer of config.properties to standard resources directory for main module.
      */
+    @Deprecated
     public static void saveSettings() {
         try {
             OutputStream out = new FileOutputStream("resources/config.properties");

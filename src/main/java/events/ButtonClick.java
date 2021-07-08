@@ -67,7 +67,6 @@ public class ButtonClick extends ListenerAdapter {
             try {
                 presence.setStatus(newStatus);
                 Setting.STATUS = newStatus;
-                Setting.saveSettings();
 
                 Message oldMessage = event.getMessage();
                 assert oldMessage != null;
