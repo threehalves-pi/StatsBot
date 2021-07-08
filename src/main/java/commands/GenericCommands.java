@@ -47,7 +47,8 @@ public class GenericCommands {
                         "Developers",
                         "Making AP Stats Bot is a [collaborative](" + Setting.GITHUB_LINK + ") effort. This " +
                         "project\u2014along with the popular [survey](" + Setting.SURVEY_LINK + ") and " +
-                        "[FAQ](" + Setting.FAQ_LINK + ")\u2014was created by " + Utils.mention(ID.SIMON) + "."),
+                        "[FAQ](" + Setting.FAQ_LINK + ")\u2014was initially created by " + Utils.mention(ID.SIMON) +
+                        ", but is now available for public feedback and contributions."),
                 Utils.makeField(
                         "Acknowledgements",
                         "Many thanks to " + Utils.mention(ID.NOTSMART) + ", " + Utils.mention(ID.BLU) + ", " +
