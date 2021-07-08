@@ -32,20 +32,14 @@ public class GenericCommands {
     public static void help(SlashCommandEvent event) {
         EmbedBuilder embed = Utils.buildEmbed(
                 "AP Stats Bot - Info",
-                "Hi, I'm " + Utils.mentionMe() + ", a custom Discord bot designed to help AP students " +
-                "with statistics.",
+                "Hi, I'm " + Utils.mentionMe() + ", a custom Discord bot designed to help AP Statistics " +
+                "students.",
                 Colors.INFO,
                 "I'm open source! Type /source for more info.",
                 Utils.makeField(
                         "Commands",
                         "Currently, I only support slash commands (that's what you used to see this panel). " +
                         "I'm still under development though, so check back later for new features."
-                ),
-                Utils.makeField(
-                        "Other Info",
-                        "For answers to plenty of frequently asked questions, check out [this document](" +
-                        Setting.FAQ_LINK + ") from the channel pins. And in case you missed it, don't forget to take " +
-                        "[this survey](" + Setting.SURVEY_LINK + ") for AP Statistics students."
                 ),
                 Utils.makeField(
                         "Developers",
@@ -58,6 +52,12 @@ public class GenericCommands {
                         Utils.mention(ID.LANCE) + ", " + Utils.mention(ID.SNOWFLAKE) + ", " +
                         Utils.mention(ID.ZENITH) + ", and " + Utils.mention(ID.SHADOW) +
                         " for their contributions, suggestions, and feedback for Stats Bot."
+                ),
+                Utils.makeField(
+                        "Other Info",
+                        "For answers to plenty of frequently asked questions, check out [this document](" +
+                        Setting.FAQ_LINK + ") from the channel pins. And in case you missed it, don't forget to take " +
+                        "[this survey](" + Setting.SURVEY_LINK + ") for AP Statistics students."
                 ),
                 Utils.makeField(
                         "Prefix",
