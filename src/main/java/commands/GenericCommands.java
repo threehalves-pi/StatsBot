@@ -11,7 +11,7 @@ public class GenericCommands {
     }
 
     /**
-     * Responds with the {@link Setting#SURVEY_LINK} when the <b>/survey</b> command is used
+     * Responds with the {@link Setting#SURVEY_LINK} when the <code>/survey</code> command is used
      *
      * @param event The {@link SlashCommandEvent}
      */
@@ -23,14 +23,14 @@ public class GenericCommands {
     }
 
     /**
-     * Sends a generic help {@link MessageEmbed} containing info about AP Stats Bot
+     * Sends a generic help message containing info about AP Stats Bot.
      *
      * @param event The {@link SlashCommandEvent}
      */
     public static void helpGeneric(SlashCommandEvent event) {
         EmbedBuilder embed = Utils.buildEmbed(
                 "Filler Title",
-                "Hi, I'm **Stats Bot**, a bot designed by <@" + ID.SIMON + "> to provide utilities " +
+                "Hi, I'm **AP Stats Bot**, a bot designed by <@" + ID.SIMON + "> to provide utilities " +
                         "and assistance to AP Statistics students. Want to learn more? Continue reading!",
                 Colors.INFO,
                 "I'm open source! Click on the blue title of this embed to see the Github Repository to learn more about who helped " +
