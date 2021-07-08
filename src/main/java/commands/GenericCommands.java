@@ -20,10 +20,16 @@ public class GenericCommands {
      * @param event The {@link SlashCommandEvent}
      */
     public static void survey(SlashCommandEvent event) {
-        event.reply("Do you want to help out future AP Statistics students? If you answered yes to that " +
-                    "question you should take the fantastic survey designed to do just that: <" + Setting.SURVEY_LINK + ">. " +
-                    "Even if you answered no to that question you should still take it anyways."
-        ).queue();
+        EmbedBuilder embed = Utils.buildEmbed(
+                "AP Statistics Survey",
+                "Each year we survey AP Statistics students after they take the AP exam. We ask about " +
+                "study resources, course difficulty, graphing calculators, and much more. The data we collect are " +
+                "used to make [this FAQ document](" + Setting.FAQ_LINK + ") that serves to assist incoming " +
+                "students as they prepare for the exam.\n\n" +
+                "If you've taken AP Statistics, please take some time to help us help years of students to come.",
+                Colors.INFO);
+
+        event.reply(Utils.addLinkButton(embed, Setting.SURVEY_LINK, "Take the survey!")).queue();
     }
 
     /**
