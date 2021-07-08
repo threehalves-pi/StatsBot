@@ -14,7 +14,8 @@ public class Setting {
     public static String PREFIX = "";
     public static OnlineStatus STATUS = OnlineStatus.UNKNOWN;
     public static double DAD_BOT_CHANCE = -1;
-    public static boolean RELOAD_COMMANDS = true;
+    public static boolean LOAD_COMMANDS_GLOBAL = false;
+    public static boolean LOAD_COMMANDS_TESTING = false;
 
     public static int ANNOUNCEMENT_DELAY = -1;
     public static int ANNOUNCEMENT_MESSAGES_CHECK = -1;
@@ -41,12 +42,12 @@ public class Setting {
             InputStream in = new FileInputStream("resources/config.properties");
             properties.load(in);
 
-            VERSION = properties.getProperty("version");
 
             PREFIX = properties.getProperty("prefix");
             STATUS = OnlineStatus.fromKey(properties.getProperty("status"));
+            VERSION = properties.getProperty("version");
+
             DAD_BOT_CHANCE = Double.parseDouble(properties.getProperty("dad_bot_chance"));
-            RELOAD_COMMANDS = Boolean.parseBoolean(properties.getProperty("refresh-commands"));
 
             ANNOUNCEMENT_DELAY = Integer.parseInt(properties.getProperty("announcement_delay"));
             ANNOUNCEMENT_MESSAGES_CHECK = Integer.parseInt(properties.getProperty("announcement_messages_check"));
@@ -55,6 +56,8 @@ public class Setting {
             ASKING_QUESTIONS_FAQ_LINK = properties.getProperty("asking_questions_faq_link");
             SURVEY_TEMPLATE = properties.getProperty("survey_template");
 
+            LOAD_COMMANDS_GLOBAL = Boolean.parseBoolean(properties.getProperty("load_commands_global"));
+            LOAD_COMMANDS_TESTING = Boolean.parseBoolean(properties.getProperty("load_commands_testing"));
             GITHUB_LINK = properties.getProperty("github_link");
 
             LOG.info("Loaded settings from config.properties.");

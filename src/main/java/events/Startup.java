@@ -27,21 +27,22 @@ public class Startup extends ListenerAdapter {
         // Import config settings
         Setting.importSettings();
 
-        // Update commands if enabled
-        if(Setting.RELOAD_COMMANDS) {
-            CommandListUpdateAction globalCommands = Main.jda.updateCommands();
-            CommandsRegister.registerGlobalSlashCommands(globalCommands);
-        }
-
         // Set status
         Main.jda.getPresence().setStatus(Setting.STATUS);
 
         // Locate necessary Discord entities and print startup log
         printStartupLog();
 
-        // Register Guild-specific slash commands
-        if(Setting.RELOAD_COMMANDS)
-            CommandsRegister.registerAdminSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
+        // Register global slash commands if enabled
+        if (Setting.LOAD_COMMANDS_GLOBAL) {
+            CommandListUpdateAction globalCommands = Main.jda.updateCommands();
+            CommandsRegister.registerGlobalSlashCommands(globalCommands);
+        }
+
+        // Register private and testing slash commands if enabled
+        if (Setting.LOAD_COMMANDS_TESTING) {
+            CommandsRegister.registerPrivateSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
+        }
 
         // Initiate announcement timer
         Announcements.initiateTimer();
