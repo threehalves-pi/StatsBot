@@ -96,7 +96,7 @@ public class GenericCommands {
                                 "Source Code",
                                 Utils.mentionMe() + " is completely open source. We welcome general " +
                                 "suggestions, simple bug fixes, and significant feature contributions. " +
-                                "Check out the code " + Utils.link("on github", Setting.GITHUB_LINK) + ").",
+                                "Check out the code " + Utils.link("on github", Setting.GITHUB_LINK) + ".",
                                 Colors.INFO,
                                 "Want to see your name on the developer list? Make a pull request on github!",
                                 Utils.makeField(
