@@ -34,15 +34,12 @@ public class Startup extends ListenerAdapter {
         printStartupLog();
 
         // Register global slash commands if enabled
-        if (Setting.LOAD_COMMANDS_GLOBAL) {
-            CommandListUpdateAction globalCommands = Main.jda.updateCommands();
-            CommandsRegister.registerGlobalSlashCommands(globalCommands);
-        }
+        if (Setting.LOAD_COMMANDS_GLOBAL)
+            CommandsRegister.registerGlobalSlashCommands(Main.jda.updateCommands());
 
         // Register private and testing slash commands if enabled
-        if (Setting.LOAD_COMMANDS_TESTING) {
+        if (Setting.LOAD_COMMANDS_TESTING)
             CommandsRegister.registerPrivateSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
-        }
 
         // Initiate announcement timer
         Announcements.initiateTimer();

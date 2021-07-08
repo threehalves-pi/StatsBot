@@ -11,10 +11,10 @@ public class CommandsRegister {
      */
     public static void registerGlobalSlashCommands(CommandListUpdateAction commands) {
         commands.addCommands(
-                new CommandData("statsbot", "Says hello to StatsBot"),
-                new CommandData("survey", "Gets the AP Stats survey link")
-                // new CommandData("help", "The generic help command for Stats Bot"),
-                // new CommandData("source", "See the source code for Stats Bot")
+                new CommandData("statsbot", "Say hello to Stats Bot"),
+                new CommandData("survey", "Get the AP Stats survey link"),
+                new CommandData("help", "Get basic info on Stats Bot"),
+                new CommandData("source", "See the bot's source code")
         ).queue();
     }
 
@@ -26,9 +26,9 @@ public class CommandsRegister {
      */
     public static void registerPrivateSlashCommands(CommandListUpdateAction commands) {
         commands.addCommands(
-                new CommandData("panel", "Update the StatsBot control panel"),
-                new CommandData("help", "The generic help command for Stats Bot"),
-                new CommandData("source", "See the source code for Stats Bot")
+                new CommandData("panel", "Update the StatsBot control panel")
+                //new CommandData("help", "The generic help command for Stats Bot"),
+                //new CommandData("source", "See the source code for Stats Bot")
         ).queue();
     }
 }
