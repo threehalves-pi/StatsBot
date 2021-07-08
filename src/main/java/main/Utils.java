@@ -157,4 +157,20 @@ public class Utils {
     public static void replyEphemeral(SlashCommandEvent event, EmbedBuilder embed) {
         event.replyEmbeds(embed.build()).setEphemeral(true).queue();
     }
+
+    /**
+     * This formats and returns a custom hyperlink for embed messages.
+     * <p><br>
+     * Note: Discord links for embeds are formatted:
+     * <br>
+     * <code>[link text](url)</code>
+     * <br>
+     * This means that the link text must not contain brackets.
+     * @param url the destination url when the link is clicked
+     * @param text the link text
+     * @return the properly formatted link
+     */
+    public static String link(@NotNull String url, @NotNull String text) {
+        return "[" + text + "](" + url + ")";
+    }
 }

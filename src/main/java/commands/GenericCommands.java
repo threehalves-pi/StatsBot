@@ -22,8 +22,9 @@ public class GenericCommands {
                                 "AP Statistics Survey",
                                 "Each year we survey AP Statistics students after they take the AP exam. " +
                                 "We ask about study resources, course difficulty, graphing calculators, and much " +
-                                "more. The data we collect are used to make [this FAQ document](" + Setting.FAQ_LINK +
-                                ") that serves to assist incoming students as they prepare for the exam.\n\n" +
+                                "more. The data we collect are used to make " +
+                                Utils.link("this FAQ document", Setting.FAQ_LINK) + " that serves to assist " +
+                                "incoming students as they prepare for the exam.\n\n" +
                                 "If you've taken AP Statistics, please take some time to help us help years of " +
                                 "students to come.",
                                 Colors.INFO),
@@ -52,9 +53,11 @@ public class GenericCommands {
                         ),
                         Utils.makeField(
                                 "Development",
-                                "Making AP Stats Bot is a [collaborative](" + Setting.GITHUB_LINK + ") effort. " +
-                                "This project\u2014along with the popular [survey](" + Setting.SURVEY_LINK + ") and " +
-                                "[FAQ](" + Setting.FAQ_LINK + ")\u2014was initially created by " +
+                                "Making AP Stats Bot is a " +
+                                Utils.link("collaborative", Setting.GITHUB_LINK) + " effort. " +
+                                "This project\u2014along with the popular " +
+                                Utils.link("survey", Setting.SURVEY_LINK) + " and " +
+                                Utils.link("FAQ", Setting.FAQ_LINK) + "\u2014was initially created by " +
                                 Utils.mention(ID.SIMON) + ", but is now available for public feedback and " +
                                 "contributions."),
                         Utils.makeField(
@@ -67,9 +70,9 @@ public class GenericCommands {
                         Utils.makeField(
                                 "Other Info",
                                 "For answers to plenty of frequently asked questions, check out " +
-                                "[this document](" + Setting.FAQ_LINK + ") from the channel pins. And in case you " +
-                                "missed it, don't forget to take " + "[this survey](" + Setting.SURVEY_LINK + ") " +
-                                "for AP Statistics students."
+                                Utils.link("this document", Setting.FAQ_LINK) + " from the channel pins. " +
+                                "And in case you missed it, don't forget to take " +
+                                Utils.link("this survey", Setting.SURVEY_LINK) + " for AP Statistics students."
                         ),
                         Utils.makeField(
                                 "Prefix",
@@ -93,7 +96,7 @@ public class GenericCommands {
                                 "Source Code",
                                 Utils.mentionMe() + " is completely open source. We welcome general " +
                                 "suggestions, simple bug fixes, and significant feature contributions. " +
-                                "Check out the code [on github](" + Setting.GITHUB_LINK + ").",
+                                "Check out the code " + Utils.link("on github", Setting.GITHUB_LINK) + ").",
                                 Colors.INFO,
                                 "Want to see your name on the developer list? Make a pull request on github!",
                                 Utils.makeField(
