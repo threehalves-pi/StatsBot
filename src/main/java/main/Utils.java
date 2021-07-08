@@ -88,4 +88,13 @@ public class Utils {
     public static String mention(long id) {
         return "<@" + id + ">";
     }
+
+    /**
+     * Similar to {@link #mention(long)}, this returns a Discord mention for the bot account. This is simply a
+     * convenience method for <code>{@link Main#jda}.getSelfUser().getAsMention()</code>.
+     * @return a string that mentions the bot account
+     */
+    public static String mentionMe() {
+        return Main.jda.getSelfUser().getAsMention();
+    }
 }

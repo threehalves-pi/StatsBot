@@ -32,7 +32,8 @@ public class GenericCommands {
     public static void help(SlashCommandEvent event) {
         EmbedBuilder embed = Utils.buildEmbed(
                 "AP Stats Bot - Info",
-                "Hi, I'm **Stats Bot**, a custom Discord bot designed to help AP students with statistics.",
+                "Hi, I'm " + Utils.mentionMe() + ", a custom Discord bot designed to help AP students " +
+                "with statistics.",
                 Colors.INFO,
                 "I'm open source! Type /source for more info.",
                 Utils.makeField(

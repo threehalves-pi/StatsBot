@@ -75,7 +75,6 @@ public class Startup extends ListenerAdapter {
 
         Discord.SIMON = Main.jda.retrieveUserById(ID.SIMON).complete();
 
-        Main.jda.getSelfUser();
         EmbedBuilder embed = Utils.buildEmbed(
                 "Startup Log",
                 "",
