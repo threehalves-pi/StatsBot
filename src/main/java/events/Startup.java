@@ -8,13 +8,12 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.ReadyEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.internal.utils.JDALogger;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 public class Startup extends ListenerAdapter {
-    private static final Logger LOG = JDALogger.getLog(Startup.class);
+    public static final Logger LOG = JDALogger.getLog(Startup.class);
 
     /**
      * When bot starts up, locate necessary Discord entities

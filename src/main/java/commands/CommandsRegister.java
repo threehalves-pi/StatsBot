@@ -1,5 +1,6 @@
 package commands;
 
+import events.Startup;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
@@ -15,7 +16,9 @@ public class CommandsRegister {
                 new CommandData("survey", "Get the AP Stats survey link"),
                 new CommandData("help", "Get basic info on Stats Bot"),
                 new CommandData("source", "See the bot's source code")
-        ).queue();
+        ).queue(
+                s -> Startup.LOG.info("Pushed global slash commands.")
+        );
     }
 
     /**
@@ -29,6 +32,8 @@ public class CommandsRegister {
                 new CommandData("panel", "Update the StatsBot control panel")
                 //new CommandData("help", "The generic help command for Stats Bot"),
                 //new CommandData("source", "See the source code for Stats Bot")
-        ).queue();
+        ).queue(
+                s -> Startup.LOG.info("Pushed private slash commands.")
+        );
     }
 }
