@@ -32,7 +32,7 @@ public class GenericCommands {
                 "Filler Title",
                 "Hi, I'm **Stats Bot**, a bot designed by <@" + ID.SIMON + "> to provide utilities " +
                         "and assistance to AP Statistics students. Want to learn more? Continue reading!",
-                Colors.TURQUOISE,
+                Colors.INFO,
                 "I'm open source! Click on the blue title of this embed to see the Github Repository to learn more about who helped " +
                         "make me. Furthermore, you could help contribute to improve me and get features you want to see added!",
                 Utils.makeField(
