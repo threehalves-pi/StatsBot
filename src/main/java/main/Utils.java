@@ -32,4 +32,11 @@ public class Utils {
         return b;
     }
 
+    public static MessageEmbed.Field makeField(String name, String value, boolean inline) {
+        return new MessageEmbed.Field(name, value, inline);
+    }
+
+    public static MessageEmbed.Field makeField(String name, String value, boolean inline, boolean checked) {
+        return new MessageEmbed.Field(name, value, inline, checked);
+    }
 }
