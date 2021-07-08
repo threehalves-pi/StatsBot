@@ -166,11 +166,12 @@ public class Utils {
      * <code>[link text](url)</code>
      * <br>
      * This means that the link text must not contain brackets.
-     * @param url the destination url when the link is clicked
+     *
      * @param text the link text
+     * @param url  the destination url when the link is clicked
      * @return the properly formatted link
      */
-    public static String link(@NotNull String url, @NotNull String text) {
+    public static String link(@NotNull String text, @NotNull String url) {
         return "[" + text + "](" + url + ")";
     }
 }
