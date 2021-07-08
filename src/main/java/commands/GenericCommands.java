@@ -23,9 +23,9 @@ public class GenericCommands {
                                 "Each year we survey AP Statistics students after they take the AP exam. " +
                                 "We ask about study resources, course difficulty, graphing calculators, and much " +
                                 "more. The data we collect are used to make " +
-                                Utils.link("this FAQ document", Setting.FAQ_LINK) + " that serves to assist " +
+                                Utils.link("this FAQ document", Setting.FAQ_LINK) + ", which serves to assist " +
                                 "incoming students as they prepare for the exam.\n\n" +
-                                "If you've taken AP Statistics, please take some time to help us help years of " +
+                                "If you've taken AP Statistics, please take some time to help many years of " +
                                 "students to come.",
                                 Colors.INFO),
                         Setting.SURVEY_LINK,
