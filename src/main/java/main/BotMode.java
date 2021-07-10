@@ -97,23 +97,14 @@ public class BotMode {
     }
 
     /**
-     * This checks whether the current {@link BotMode} implements the given {@link Mode}.
-     *
-     * @param mode the mode to check
-     * @return true if that mode is allowed and should be processed; false if it should be ignored
-     */
-    public boolean allows(Mode mode) {
-        return modes.contains(mode);
-    }
-
-    /**
-     * This is a convenience method for negating {@link #allows(Mode)}.
+     * This checks whether the current {@link BotMode} implements the given {@link Mode}. If it doesn't implement the
+     * given mode, events pertaining to that mode should be ignored accordingly.
      *
      * @param mode the mode to check
      * @return true if that mode should be ignored; false if it is allowed and should be processed
      */
     public boolean ignores(Mode mode) {
-        return !allows(mode);
+        return !modes.contains(mode);
     }
 
     /**
