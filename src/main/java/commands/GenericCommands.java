@@ -81,8 +81,7 @@ public class GenericCommands {
                         ),
                         Utils.makeField(
                                 "Version",
-                                "[Current](" + Setting.GITHUB_LINK + ") running version: `" +
-                                Setting.VERSION + "`.",
+                                "Running version `" + Setting.VERSION + "`.",
                                 true
                         )
                 ).setTimestamp(Instant.now())
