@@ -147,7 +147,7 @@ public class BotMode {
      * @return true if the event should be ignored; false if it should be allowed and processed
      */
     private boolean ignoreEvent(boolean isFromGuild, @Nullable Guild guild) {
-        if (isFromGuild)
+        if (!isFromGuild)
             return ignores(Mode.DIRECT_MESSAGES);
         else if (guild != null && guild.getIdLong() == ID.STATSBOT_CENTRAL_GUILD)
             return ignores(Mode.STATSBOT_CENTRAL_MESSAGES);
