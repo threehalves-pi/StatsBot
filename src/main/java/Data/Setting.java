@@ -1,4 +1,4 @@
-package main;
+package Data;
 
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.internal.utils.JDALogger;

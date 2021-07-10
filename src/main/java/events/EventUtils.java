@@ -1,6 +1,6 @@
 package events;
 
-import main.ID;
+import Data.ID;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.TextChannel;

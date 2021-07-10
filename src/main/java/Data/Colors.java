@@ -1,4 +1,4 @@
-package main;
+package Data;
 
 import java.awt.*;
 

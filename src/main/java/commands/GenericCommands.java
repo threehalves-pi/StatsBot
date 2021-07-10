@@ -1,6 +1,9 @@
 package commands;
 
-import main.*;
+import Data.Colors;
+import Data.ID;
+import Data.Setting;
+import main.Utils;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 import java.time.Instant;
