@@ -149,6 +149,17 @@ public class Utils {
     }
 
     /**
+     * This is a convenience method for calling {@link #replyEphemeral(SlashCommandEvent, Message)} using a {@link
+     * String} message instead of a built {@link Message} instance. It sends an ephemeral reply to a slash command.
+     *
+     * @param event   the slash command event to reply to
+     * @param message the message to send
+     */
+    public static void replyEphemeral(SlashCommandEvent event, String message) {
+        replyEphemeral(event, new MessageBuilder(message).build());
+    }
+
+    /**
      * This is a convenience method to send an ephemeral reply to a slash command.
      *
      * @param event the slash command event to reply to

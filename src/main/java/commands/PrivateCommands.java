@@ -2,12 +2,17 @@ package commands;
 
 
 import main.Main;
+import main.Utils;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
 
-public class AdminCommands {
-    public static void runControlPanel(SlashCommandEvent event) {
+public class PrivateCommands {
+    public static void testing(SlashCommandEvent event) {
+        Utils.replyEphemeral(event, "Test.");
+    }
+
+    public static void panel(SlashCommandEvent event) {
         OnlineStatus status = Main.jda.getPresence().getStatus();
         event
                 .reply("**Set Discord Status**")

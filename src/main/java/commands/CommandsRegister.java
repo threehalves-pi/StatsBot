@@ -4,6 +4,9 @@ import events.Startup;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CommandsRegister {
     /**
      * Creates the global slash commands available in all servers and DMs
@@ -11,12 +14,14 @@ public class CommandsRegister {
      * @param commands the command list
      */
     public static void registerGlobalSlashCommands(CommandListUpdateAction commands) {
-        commands.addCommands(
-                new CommandData("statsbot", "Say hello to Stats Bot"),
-                new CommandData("survey", "Get the AP Stats survey link"),
-                new CommandData("help", "Get basic info on Stats Bot"),
-                new CommandData("source", "See the bot's source code")
-        ).queue(
+        List<CommandData> list = new ArrayList<>();
+
+        list.add(new CommandData("statsbot", "Say hello to Stats Bot"));
+        list.add(new CommandData("survey", "Get the AP Stats survey link"));
+        list.add(new CommandData("help", "Get basic info on Stats Bot"));
+        list.add(new CommandData("source", "See the bot's source code"));
+
+        commands.addCommands(list).queue(
                 s -> Startup.LOG.info("Pushed global slash commands.")
         );
     }
@@ -28,11 +33,12 @@ public class CommandsRegister {
      * @param commands the command list
      */
     public static void registerPrivateSlashCommands(CommandListUpdateAction commands) {
-        commands.addCommands(
-                new CommandData("panel", "Update the StatsBot control panel")
-                //new CommandData("help", "The generic help command for Stats Bot"),
-                //new CommandData("source", "See the source code for Stats Bot")
-        ).queue(
+        List<CommandData> list = new ArrayList<>();
+
+        list.add(new CommandData("panel", "Update the StatsBot control panel"));
+        list.add(new CommandData("testing", "Slash command tester"));
+
+        commands.addCommands(list).queue(
                 s -> Startup.LOG.info("Pushed private slash commands.")
         );
     }
