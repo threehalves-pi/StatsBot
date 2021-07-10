@@ -1,7 +1,7 @@
 package main;
 
-import Data.Discord;
-import Data.ID;
+import data.Discord;
+import data.ID;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;

@@ -1,8 +1,8 @@
 package announcements;
 
-import Data.Colors;
-import Data.ID;
-import Data.Setting;
+import data.Colors;
+import data.ID;
+import data.Setting;
 import main.*;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;

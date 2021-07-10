@@ -1,8 +1,8 @@
 package events;
 
 import announcements.Announcements;
-import Data.ID;
-import Data.Setting;
+import data.ID;
+import data.Setting;
 import main.Main;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;

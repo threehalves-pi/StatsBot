@@ -1,4 +1,4 @@
-package Data;
+package data;
 
 /**
  * Contains static long Discord IDs for various channels, guilds, and users.

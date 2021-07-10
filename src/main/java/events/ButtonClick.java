@@ -1,8 +1,8 @@
 package events;
 
-import Data.Discord;
+import data.Discord;
 import main.Main;
-import Data.Setting;
+import data.Setting;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Message;

@@ -1,8 +1,8 @@
 package commands;
 
-import Data.Colors;
-import Data.ID;
-import Data.Setting;
+import data.Colors;
+import data.ID;
+import data.Setting;
 import main.Utils;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 

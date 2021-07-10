@@ -1,6 +1,6 @@
 package events;
 
-import Data.*;
+import data.*;
 import announcements.Announcements;
 import commands.CommandsRegister;
 import main.*;
