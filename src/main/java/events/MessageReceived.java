@@ -3,7 +3,6 @@ package events;
 import announcements.Announcements;
 import Data.ID;
 import Data.Setting;
-import main.BotMode;
 import main.Main;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
