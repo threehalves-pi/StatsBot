@@ -111,8 +111,8 @@ public class Utils {
     }
 
     /**
-     * Adds a single link button to a {@link MessageBuilder} instance. Note that this overwrites any existing {@link
-     * ActionRow} instances attached to the message (including any other buttons).
+     * This adds a single link button to a {@link MessageBuilder} instance. Note that this overwrites any existing
+     * {@link ActionRow} instances attached to the message (including any other buttons).
      *
      * @param messageBuilder the existing message to send
      * @param url            the destination url for the button
