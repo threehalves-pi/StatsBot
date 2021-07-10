@@ -2,6 +2,7 @@ package main;
 
 import data.Discord;
 import data.ID;
+import events.Startup;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
@@ -25,24 +26,39 @@ public class BotMode {
      * This is the list of currently enabled modes for this {@link BotMode} instance.
      */
     private final List<Mode> modes;
+    private final String modeName;
 
     /**
      * This creates a {@link BotMode} instance with a set of enabled modes.
      *
      * @param modes the {@link Mode}(s) to enable
      */
-    private BotMode(Mode... modes) {
+    private BotMode(String modeName, Mode... modes) {
         this.modes = Arrays.asList(modes);
+        this.modeName = modeName;
     }
 
     /**
-     * This defines a custom {@link BotMode} instance which select modes enabled.
+     * This defines a custom {@link BotMode} instance with select modes enabled. The {@link #modeName} is set to
+     * "custom" by default.
      *
      * @param modes one or more {@link Mode} enums to enable.
      * @return the new {@link BotMode} instance
      */
     public static BotMode of(Mode... modes) {
-        return new BotMode(modes);
+        return of("Custom", modes);
+    }
+
+    /**
+     * This defines a custom {@link BotMode} instance with select modes enabled and a custom mode name.
+     *
+     * @param modeName the name of the custom {@link BotMode} (omit for "custom"). This is used in the {@link Startup}
+     *                 log
+     * @param modes one or more {@link Mode} enums to enable.
+     * @return the new {@link BotMode} instance
+     */
+    public static BotMode of(String modeName, Mode... modes) {
+        return new BotMode(modeName, modes);
     }
 
     /**
@@ -52,6 +68,7 @@ public class BotMode {
      */
     public static BotMode all() {
         return new BotMode(
+                "all",
                 Mode.SERVER_MESSAGES,
                 Mode.DIRECT_MESSAGES,
                 Mode.STATSBOT_CENTRAL_MESSAGES,
@@ -67,6 +84,7 @@ public class BotMode {
      */
     public static BotMode running() {
         return new BotMode(
+                "running",
                 Mode.SERVER_MESSAGES,
                 Mode.DIRECT_MESSAGES,
                 Mode.GLOBAL_SLASH_COMMANDS);
@@ -80,8 +98,17 @@ public class BotMode {
      */
     public static BotMode testing() {
         return new BotMode(
+                "testing",
                 Mode.STATSBOT_CENTRAL_MESSAGES,
                 Mode.PRIVATE_SLASH_COMMANDS);
+    }
+
+    /**
+     * This returns the custom mode name assigned to this {@link BotMode} at creation.
+     * @return the mode name
+     */
+    public String getModeName() {
+        return modeName;
     }
 
     /**
@@ -143,7 +170,7 @@ public class BotMode {
      * by {@link Mode#STATSBOT_CENTRAL_MESSAGES}, and all other messages by {@link Mode#SERVER_MESSAGES}.
      *
      * @param isFromGuild whether the message was sent in a {@link Guild}
-     * @param guild the {@link Guild} that the message was sent in (null if not applicable)
+     * @param guild       the {@link Guild} that the message was sent in (null if not applicable)
      * @return true if the event should be ignored; false if it should be allowed and processed
      */
     private boolean ignoreEvent(boolean isFromGuild, @Nullable Guild guild) {

@@ -74,7 +74,7 @@ public class Startup extends ListenerAdapter {
 
         EmbedBuilder embed = Utils.buildEmbed(
                 "Startup Log",
-                "",
+                "Starting bot in `" + Main.MODE.getModeName() + "` mode.",
                 Colors.ADMIN,
                 new MessageEmbed.Field("AP Students",
                         getCheckLine("Server", Discord.AP_STUDENTS != null) + "\n" +
