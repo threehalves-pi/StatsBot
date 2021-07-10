@@ -11,6 +11,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 
+/**
+ * This class contains convenience methods for performing many common tasks. All of the methods here simply make coding
+ * other bot functionality slightly easier and more streamlined. Most do nothing but shorten a series of dot notation or
+ * a few lines of code.
+ */
 public class Utils {
     /**
      * This creates a basic {@link EmbedBuilder} with minimal parameters.
@@ -21,12 +26,10 @@ public class Utils {
      * @return the newly created {@link EmbedBuilder}.
      */
     public static EmbedBuilder buildEmbed(String title, String description, Color color) {
-        EmbedBuilder b = new EmbedBuilder();
-        b.setTitle(title);
-        b.setDescription(description);
-        b.setColor(color);
-
-        return b;
+        return new EmbedBuilder()
+                .setTitle(title)
+                .setDescription(description)
+                .setColor(color);
     }
 
     /**
@@ -59,10 +62,8 @@ public class Utils {
      */
     public static EmbedBuilder buildEmbed(
             String title, String description, Color color, String footer, MessageEmbed.Field... fields) {
-        EmbedBuilder b = buildEmbed(title, description, color, fields);
-        b.setFooter(footer);
-
-        return b;
+        return buildEmbed(title, description, color, fields)
+                .setFooter(footer);
     }
 
     /**

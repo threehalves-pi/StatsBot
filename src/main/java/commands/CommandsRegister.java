@@ -37,6 +37,7 @@ public class CommandsRegister {
 
         list.add(new CommandData("panel", "Update the StatsBot control panel"));
         list.add(new CommandData("testing", "Slash command tester"));
+        list.add(new CommandData("faq", "Get a link to the AP Stats FAQ document"));
 
         commands.addCommands(list).queue(
                 s -> Startup.LOG.info("Pushed private slash commands.")
