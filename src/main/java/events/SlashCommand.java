@@ -2,12 +2,16 @@ package events;
 
 import commands.PrivateCommands;
 import commands.GenericCommands;
+import main.Main;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 public class SlashCommand extends ListenerAdapter {
     public void onSlashCommand(@NotNull SlashCommandEvent event) {
+        if (Main.MODE.ignoreEvent(event))
+            return;
+
         switch (event.getName()) {
 
             // Generic commands

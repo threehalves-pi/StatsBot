@@ -3,6 +3,8 @@ package events;
 import announcements.Announcements;
 import Data.ID;
 import Data.Setting;
+import main.BotMode;
+import main.Main;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -23,6 +25,10 @@ public class MessageReceived extends ListenerAdapter {
         if (event.getAuthor().getIdLong() == ID.SELF)
             return;
 
+        // Ignore messages based on their origin and the current BotMode
+        if (Main.MODE.ignoreEvent(event))
+            return;
+
         // Whenever a message is sent in the announcements channel, the timer must be reset
         if (event.getChannel().getIdLong() == Setting.ANNOUNCEMENT_CHANNEL)
             Announcements.resetTimer();
@@ -30,18 +36,19 @@ public class MessageReceived extends ListenerAdapter {
         if (isMentioned(event))
             return;
 
+        // Check a specific list of channels that should ignore common messages
         if (EventUtils.ignoreChannel(event.getChannel()))
             return;
 
         if (checkDadBot(event))
             return;
 
-        if(checkSurveyLink(event))
+        if (checkSurveyLink(event))
             return;
 
         if (event.getMessage().getContentRaw().equalsIgnoreCase(Setting.PREFIX + "help"))
             event.getMessage().reply("This command is deprecated in favor of the new `/help` command. " +
-                    "Please use that instead.").queue();
+                                     "Please use that instead.").queue();
     }
 
     /**
@@ -55,7 +62,8 @@ public class MessageReceived extends ListenerAdapter {
         Message message = event.getMessage();
 
         if (message.getContentRaw().equals("<@!" + ID.SELF + ">")) {
-            message.reply("Hi, my prefix is `" + Setting.PREFIX + "`. You can also use `/help` for more info.").queue();
+            message.reply("Hi, my prefix is `" + Setting.PREFIX + "`. You can also use `/help` for more info.")
+                    .queue();
             return true;
         }
 
@@ -101,7 +109,7 @@ public class MessageReceived extends ListenerAdapter {
     private boolean checkSurveyLink(MessageReceivedEvent event) {
         Message message = event.getMessage();
 
-        if(message.getContentStripped().equals(Setting.SURVEY_TEMPLATE)) {
+        if (message.getContentStripped().equals(Setting.SURVEY_TEMPLATE)) {
             event.getMessage().addReaction("\uD83D\uDC4D").queue();
             return true;
         }

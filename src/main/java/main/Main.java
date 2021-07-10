@@ -13,14 +13,15 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Main {
-    public static JDA jda;
+    public static JDA JDA;
+    public static BotMode MODE = BotMode.testing();
 
     public static void main(String[] args) throws IOException, LoginException {
         String token = new String(
                 Objects.requireNonNull(Main.class.getResourceAsStream("/token.txt"))
                         .readAllBytes());
 
-        jda = JDABuilder.createDefault(token)
+        JDA = JDABuilder.createDefault(token)
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
                 .addEventListeners(new MessageReceived())
                 .addEventListeners(new Startup())

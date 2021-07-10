@@ -17,7 +17,7 @@ public class AnnounceTimer extends TimerTask {
     @Override
     public void run() {
         try {
-            TextChannel channel = Main.jda.getTextChannelById(Setting.ANNOUNCEMENT_CHANNEL);
+            TextChannel channel = Main.JDA.getTextChannelById(Setting.ANNOUNCEMENT_CHANNEL);
             assert channel != null;
 
             // Validate the channel to confirm that an announcement can be sent right now.

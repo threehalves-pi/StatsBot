@@ -13,7 +13,7 @@ public class PrivateCommands {
     }
 
     public static void panel(SlashCommandEvent event) {
-        OnlineStatus status = Main.jda.getPresence().getStatus();
+        OnlineStatus status = Main.JDA.getPresence().getStatus();
         event
                 .reply("**Set Discord Status**")
                 .addActionRow(

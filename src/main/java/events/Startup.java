@@ -28,14 +28,14 @@ public class Startup extends ListenerAdapter {
         Setting.importSettings();
 
         // Set status
-        Main.jda.getPresence().setStatus(Setting.STATUS);
+        Main.JDA.getPresence().setStatus(Setting.STATUS);
 
         // Locate necessary Discord entities and print startup log
         printStartupLog();
 
         // Register global slash commands if enabled
         if (Setting.LOAD_COMMANDS_GLOBAL)
-            CommandsRegister.registerGlobalSlashCommands(Main.jda.updateCommands());
+            CommandsRegister.registerGlobalSlashCommands(Main.JDA.updateCommands());
 
         // Register private and testing slash commands if enabled
         if (Setting.LOAD_COMMANDS_TESTING)
@@ -49,8 +49,8 @@ public class Startup extends ListenerAdapter {
     }
 
     private void printStartupLog() {
-        Discord.AP_STUDENTS = Main.jda.getGuildById(ID.AP_STUDENTS_GUILD);
-        Discord.STATSBOT_CENTRAL = Main.jda.getGuildById(ID.STATSBOT_CENTRAL_GUILD);
+        Discord.AP_STUDENTS = Main.JDA.getGuildById(ID.AP_STUDENTS_GUILD);
+        Discord.STATSBOT_CENTRAL = Main.JDA.getGuildById(ID.STATSBOT_CENTRAL_GUILD);
 
         // Channels
         boolean APStatsChannel = false;
@@ -70,7 +70,7 @@ public class Startup extends ListenerAdapter {
             Discord.STARTUP_LOG = Discord.STATSBOT_CENTRAL.getTextChannelById(ID.STARTUP_LOG_CHANNEL);
         }
 
-        Discord.SIMON = Main.jda.retrieveUserById(ID.SIMON).complete();
+        Discord.SIMON = Main.JDA.retrieveUserById(ID.SIMON).complete();
 
         EmbedBuilder embed = Utils.buildEmbed(
                 "Startup Log",

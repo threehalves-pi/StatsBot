@@ -17,6 +17,9 @@ import java.util.List;
 
 public class ButtonClick extends ListenerAdapter {
     public void onButtonClick(@NotNull ButtonClickEvent event) {
+        if (Main.MODE.ignoreEvent(event))
+            return;
+
         // If the button ID doesn't contain at least one colon, it's invalid and should be rejected
         if (!event.getComponentId().contains(":")) {
             buttonError(event);
@@ -51,7 +54,7 @@ public class ButtonClick extends ListenerAdapter {
 
     public void updateStatus(@NotNull ButtonClickEvent event, String id) {
         // Get current presence and status
-        Presence presence = Main.jda.getPresence();
+        Presence presence = Main.JDA.getPresence();
         OnlineStatus oldStatus = presence.getStatus();
 
         // Determine the desired status
