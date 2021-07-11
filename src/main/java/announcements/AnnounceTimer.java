@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.TimerTask;
 
 public class AnnounceTimer extends TimerTask {
-    private int nextAnnouncementId = 0;
 
     @Override
     public void run() {
@@ -28,16 +27,11 @@ public class AnnounceTimer extends TimerTask {
                 return;
             }
 
-            channel.sendMessage(Announcements.getAnnouncementMessage(nextAnnouncementId))
+            channel.sendMessage(Announcements.getAnnouncementMessage())
                     .queue(s -> Announcements.LOG.info("Posted scheduled announcement."));
         } catch (Exception e) {
             Announcements.LOG.error("Failed to send announcement.", e);
         }
-
-        // Switch to the next announcement number, wrapping back to the first one if necessary
-        nextAnnouncementId++;
-        if (nextAnnouncementId > Announcements.ANNOUNCEMENT_COUNT)
-            nextAnnouncementId = 0;
     }
 
     /**

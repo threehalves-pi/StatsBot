@@ -6,7 +6,6 @@ import data.Link;
 import data.Setting;
 import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.internal.utils.JDALogger;
 import org.jetbrains.annotations.NotNull;
@@ -26,8 +25,15 @@ public class Announcements {
 
     /**
      * This list contains relative weights that control the frequency with which each announcement is selected to send.
+     * <p><br>
+     * When initially added, the weights should be simple integers with no specific scale. 1 is the default weight that
+     * should be assigned to unimportant announcements. Higher numbers can be used for announcements that should be
+     * displayed more frequently.
+     * <p><br>
+     * After creating all the announcements with {@link #loadAnnouncements()}, the weights are automatically adjusted to
+     * fit on a 0-1 scale.
      */
-    private static final List<Integer> weights = new ArrayList<>();
+    private static final List<Double> weights = new ArrayList<>();
 
     public static final Logger LOG = JDALogger.getLog(Announcements.class);
     public static final ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
@@ -68,19 +74,30 @@ public class Announcements {
     }
 
     /**
-     * This must be the current number of pre-written announcements that the bot can choose from and are recognized by
-     * {@link #getAnnouncementMessage(int)}.
-     */
-    public static final int ANNOUNCEMENT_COUNT = 2;
-
-    /**
-     * Returns a pre-built {@link MessageBuilder} containing the announcement to post to Discord.
+     * Returns the desired announcement message from {@link #announcements} to post to Discord.
      *
-     * @param id the announcement number to send. If the number is unknown, the last announcement is sent.
+     * @param id the position of the desired announcement in the {@link #announcements} array
      * @return the announcement message to send
      */
     public static Message getAnnouncementMessage(int id) {
         return announcements.get(id);
+    }
+
+    /**
+     * Returns a random announcement message from {@link #announcements} to post to Discord. The random assignment is
+     * based on the announcement {@link #weights}.
+     *
+     * @return the announcement message to send
+     */
+    public static Message getAnnouncementMessage() {
+        double r = Math.random();
+        for (int i = 0; i < announcements.size(); i++)
+            if (weights.get(i) >= r)
+                return announcements.get(i);
+
+        // This line shouldn't be reached--but if it is, simply return the last announcement, as there was probably
+        // a rounding error.
+        return announcements.get(announcements.size() - 1);
     }
 
     /**
@@ -89,31 +106,48 @@ public class Announcements {
      */
     public static void loadAnnouncements() {
         announcements.add(Utils.addLinkButton(
-                announcementEmbed("Survey Reminder", "\uD83D\uDCE3",
+                announcementEmbed("Survey Reminder",
+                        "\uD83D\uDCE3",
                         "Have you taken AP Statistics already? Don't forget to complete " +
                         Utils.link("this survey", Link.SURVEY) + " to help future students!"),
                 Link.SURVEY,
                 "Take the Survey!")
         );
-        weights.add(2);
+        weights.add(2.0);
 
         announcements.add(Utils.addLinkButton(
-                announcementEmbed("Frequently Asked Questions", "\u2754",
+                announcementEmbed("Frequently Asked Questions",
+                        "\u2754",
                         "Are you new to AP Statistics? Check out " +
                         Utils.link("this FAQ", Link.FAQ) + " from pins with plenty of pre-written " +
                         "answers to common questions."),
                 Link.FAQ,
                 "View the FAQ!")
         );
-        weights.add(1);
+        weights.add(1.0);
 
         announcements.add(Utils.buildEmbed(
-                announcementEmbed("Question Help", "\uD83D\uDCDD",
+                announcementEmbed("Question Help",
+                        "\uD83D\uDCDD",
                         "Looking for help with a specific problem? See our " +
                         Utils.link("guide", Link.FAQ_ASKING_QUESTIONS) + " to asking good questions, " +
                         "and don't forget to use " + Utils.mention(ID.AP_BOT) + "'s `;question` command to ping " +
-                        "helpers."))
+                        "helpers.")
+                )
         );
+        weights.add(1.0);
+
+        // Compute the total sum of all the raw weights
+        double sum = 0;
+        for (double d : weights)
+            sum += d;
+
+        // Adjust all the weights to fit a 0-1 scale for comparison with Math.random().
+        double cumulative = 0;
+        for (int i = 0; i < weights.size(); i++) {
+            cumulative += weights.get(i) / sum;
+            weights.set(i, cumulative);
+        }
     }
 
     /**
