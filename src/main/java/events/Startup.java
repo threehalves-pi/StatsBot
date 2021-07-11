@@ -23,6 +23,7 @@ public class Startup extends ListenerAdapter {
      * @param event ready event data
      */
     public void onReady(@NotNull ReadyEvent event) {
+        System.out.println();
         LOG.info("Processing startup tasks...");
 
         // Import config settings
@@ -44,6 +45,9 @@ public class Startup extends ListenerAdapter {
 
         // Load FAQ table of contents data and construct /faq response message
         GenericCommands.loadFAQTableOfContents();
+
+        // Load all the announcement messages
+        Announcements.loadAnnouncements();
 
         // Initiate announcement timer
         Announcements.initiateTimer();

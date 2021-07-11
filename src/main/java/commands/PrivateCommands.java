@@ -1,7 +1,6 @@
 package commands;
 
 
-import data.Colors;
 import main.Main;
 import main.Utils;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -9,15 +8,9 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.interactions.components.Button;
 
 public class PrivateCommands {
+
     public static void testing(SlashCommandEvent event) {
-        Utils.replyEphemeral(event, Utils.makeEmbed(
-                "Title",
-                "Description",
-                Colors.INFO,
-                Utils.makeField("Field1", "text1\ntext2\n\ntext3\n"),
-                Utils.makeField("Field2", "text1"),
-                Utils.makeField("Field3", "abc\n"),
-                Utils.makeField("Field4", "def")));
+        Utils.replyEphemeral(event, "There's nothing to test right now.");
     }
 
     public static void panel(SlashCommandEvent event) {

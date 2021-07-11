@@ -1,9 +1,11 @@
 package announcements;
 
+import commands.PrivateCommands;
 import data.Colors;
 import data.ID;
 import data.Link;
 import data.Setting;
+import events.Startup;
 import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -12,6 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.*;
@@ -148,6 +151,8 @@ public class Announcements {
             cumulative += weights.get(i) / sum;
             weights.set(i, cumulative);
         }
+
+        Startup.LOG.info("Loaded pre-written announcements");
     }
 
     /**
