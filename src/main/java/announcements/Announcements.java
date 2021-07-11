@@ -47,7 +47,7 @@ public class Announcements {
      */
     public static void initiateTimer() {
         resetTimer();
-        LOG.info("Initiated announcement timer.");
+        LOG.info("Initiated announcement timer");
     }
 
     /**

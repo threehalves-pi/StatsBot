@@ -49,10 +49,10 @@ public class Setting {
             LOAD_COMMANDS_GLOBAL = Boolean.parseBoolean(properties.getProperty("load_commands_global"));
             LOAD_COMMANDS_TESTING = Boolean.parseBoolean(properties.getProperty("load_commands_testing"));
 
-            LOG.info("Loaded settings from config.properties.");
+            LOG.info("Loaded settings from config.properties");
 
         } catch (Exception e) {
-            LOG.error("Failed to import settings from config.properties.", e);
+            LOG.error("Failed to import settings from config.properties", e);
         }
     }
 

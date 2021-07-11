@@ -25,7 +25,7 @@ public class CommandsRegister {
         list.add(new CommandData("faq", "Get a link to the AP Stats FAQ document"));
 
         commands.addCommands(list).queue(
-                s -> Startup.LOG.info("Pushed global slash commands.")
+                s -> Startup.LOG.info("Pushed global slash commands")
         );
     }
 
@@ -59,7 +59,7 @@ public class CommandsRegister {
         list.add(new CommandData("testing", "Slash command tester"));
 
         commands.addCommands(list).queue(
-                s -> Startup.LOG.info("Pushed private slash commands.")
+                s -> Startup.LOG.info("Pushed private slash commands")
         );
     }
 }
