@@ -48,6 +48,15 @@ public record FAQEntry(String type, String text, String link) {
      * @return the hyperlink for this entry
      */
     public String getHyperlink() {
-        return Utils.link(text,Link.FAQ_HEADER + link);
+        return Utils.link(text, getFullLink());
+    }
+
+    /**
+     * Returns <code>{@link Link#FAQ_HEADER} + {@link #link()}</code>
+     *
+     * @return the full section link
+     */
+    public String getFullLink() {
+        return Link.FAQ_HEADER + link;
     }
 }

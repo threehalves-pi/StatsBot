@@ -150,7 +150,7 @@ public class MessageReceived extends ListenerAdapter {
                         ),
                         Colors.INFO,
                         "Sent by @" + requestingUser),
-                Link.FAQ,
+                id == -1 ? Link.FAQ : FAQEntry.questions.get(id - 1).getFullLink(),
                 "View the FAQ"
         );
     }
