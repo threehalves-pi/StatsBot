@@ -1,7 +1,9 @@
 package commands;
 
 import events.Startup;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
+import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 
 import java.util.ArrayList;
@@ -37,6 +39,23 @@ public class CommandsRegister {
         List<CommandData> list = new ArrayList<>();
 
         list.add(new CommandData("panel", "Update the StatsBot control panel"));
+
+        list.add(new CommandData("announcement", "View and trigger announcement messages")
+                .addSubcommands(
+                        new SubcommandData("list", "List all announcement message IDs"),
+                        new SubcommandData("get", "View a specific announcement")
+                                .addOption(
+                                        OptionType.INTEGER,
+                                        "id",
+                                        "The announcement id--see /announcement list for a list of ids."),
+                        new SubcommandData("push", "Send an announcement to the stats channel")
+                                .addOption(
+                                        OptionType.INTEGER,
+                                        "id",
+                                        "The announcement id--see /announcement list for a list of ids.")
+                )
+        );
+
         list.add(new CommandData("testing", "Slash command tester"));
 
         commands.addCommands(list).queue(

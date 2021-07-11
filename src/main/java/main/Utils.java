@@ -104,6 +104,15 @@ public class Utils {
     }
 
     /**
+     * This returns a string for mentioning channels based on their Discord id.
+     * @param id the Discord id of the channel to mention
+     * @return a string that mentions that channel
+     */
+    public static String mentionChannel(long id) {
+        return "<#" + id + ">";
+    }
+
+    /**
      * Similar to {@link #mention(long)}, this returns a Discord mention for the bot account. This is simply a
      * convenience method for <code>{@link Main#JDA}.getSelfUser().getAsMention()</code>.
      *
@@ -218,5 +227,21 @@ public class Utils {
      */
     public static Message buildEmbed(EmbedBuilder embed) {
         return new MessageBuilder().setEmbeds(embed.build()).build();
+    }
+
+    /**
+     * This method checks to see if a given message contains at least one embed. If it does, the title of the first
+     * embed in the message is returned. If there is no embed, or if the embed's title is empty, an empty string is
+     * returned. This method will not return null and will not throw errors if there are no embeds.
+     * @param message the message to check for embeds
+     * @return the title of the first embed in the message, or an empty string if no embed or title is found
+     */
+    public static @NotNull String getEmbedTitle(Message message) {
+        try {
+            String title = message.getEmbeds().get(0).getTitle();
+            return title == null ? "" : title;
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

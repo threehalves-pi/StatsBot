@@ -86,19 +86,39 @@ public class Announcements {
 
     /**
      * Returns a random announcement message from {@link #announcements} to post to Discord. The random assignment is
-     * based on the announcement {@link #weights}.
+     * based on the announcement {@link #weights}. This method works by simply using {@link #getRandomId()} to obtain an
+     * id and retrieving the corresponding announcement from the {@link #announcements} list.
      *
      * @return the announcement message to send
      */
     public static Message getAnnouncementMessage() {
+        return announcements.get(getRandomId());
+    }
+
+    /**
+     * This returns a random announcement ID based on the announcement {@link #weights}.
+     *
+     * @return a random announcement id
+     */
+    public static int getRandomId() {
         double r = Math.random();
         for (int i = 0; i < announcements.size(); i++)
             if (weights.get(i) >= r)
-                return announcements.get(i);
+                return i;
 
-        // This line shouldn't be reached--but if it is, simply return the last announcement, as there was probably
+        // This line shouldn't be reached--but if it is, simply return the last announcement id, as there was probably
         // a rounding error.
-        return announcements.get(announcements.size() - 1);
+        return announcements.size() - 1;
+    }
+
+    /**
+     * This returns the number of pre-written announcements that were loaded on startup with {@link
+     * #loadAnnouncements()}.
+     *
+     * @return the size of the {@link #announcements} list
+     */
+    public static int getAnnouncementCount() {
+        return announcements.size();
     }
 
     /**
