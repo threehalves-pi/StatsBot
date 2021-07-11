@@ -20,5 +20,5 @@ dependencies {
 }
 
 application {
-    mainClassName = 'main.Main'
+    mainClass.set("main.Main")
 }
