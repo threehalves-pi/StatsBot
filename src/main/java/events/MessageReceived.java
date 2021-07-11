@@ -99,19 +99,29 @@ public class MessageReceived extends ListenerAdapter {
     }
 
     /**
-     * Checks if a message equals the {@link Setting#SURVEY_TEMPLATE}. If it does, a "thumbs up" reaction will be added
-     * indicating endorsement for the message
+     * Checks if a message matches one of the standard survey advertisement messages. If it does, a "thumbs up" reaction
+     * is added to indicate the bot's endorsement of the message.
      *
      * @param event The {@link MessageReceivedEvent}
-     * @return If a survey link was indeed found, true will be returned
+     * @return true if the message matched a survey link template; false otherwise
      */
     private boolean checkSurveyLink(MessageReceivedEvent event) {
-        Message message = event.getMessage();
+        String[] surveyMessages = {
+                """
+                fill out this survey to help future ap stats students: https://bit.ly/apstat-survey""",
+                """
+                if you've taken ap statistics, please fill out this survey to help future students prepare for the exam:
+                "https://bit.ly/apstat-survey"""
+        };
 
-        if (message.getContentStripped().equals(Setting.SURVEY_TEMPLATE)) {
-            event.getMessage().addReaction("\uD83D\uDC4D").queue();
-            return true;
-        }
+        Message message = event.getMessage();
+        String text = message.getContentDisplay().toLowerCase(Locale.ROOT);
+
+        for (String m : surveyMessages)
+            if (m.equals(text)) {
+                message.addReaction("\uD83D\uDC4D").queue();
+                return true;
+            }
 
         return false;
     }
