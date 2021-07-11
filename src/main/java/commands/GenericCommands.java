@@ -2,6 +2,7 @@ package commands;
 
 import data.Colors;
 import data.ID;
+import data.Link;
 import data.Setting;
 import events.Startup;
 import main.Utils;
@@ -28,24 +29,24 @@ public class GenericCommands {
     }
 
     /**
-     * Responds with the {@link Setting#SURVEY_LINK} when the <code>/survey</code> command is used
+     * Responds with the {@link Link#SURVEY} when the <code>/survey</code> command is used
      *
      * @param event The {@link SlashCommandEvent}
      */
     public static void survey(SlashCommandEvent event) {
         Utils.replyEphemeral(event,
                 Utils.addLinkButton(
-                        Utils.buildEmbed(
+                        Utils.makeEmbed(
                                 "AP Statistics Survey",
                                 "Each year we survey AP Statistics students after they take the AP exam. " +
                                 "We ask about study resources, course difficulty, graphing calculators, and much " +
                                 "more. The data we collect are used to make " +
-                                Utils.link("this FAQ document", Setting.FAQ_LINK) + ", which serves to assist " +
+                                Utils.link("this FAQ document", Link.FAQ) + ", which serves to assist " +
                                 "incoming students as they prepare for the exam.\n\n" +
                                 "If you've taken AP Statistics, please take some time to help many years of " +
                                 "students to come.",
                                 Colors.INFO),
-                        Setting.SURVEY_LINK,
+                        Link.SURVEY,
                         "Take the survey!")
         );
     }
@@ -57,7 +58,7 @@ public class GenericCommands {
      */
     public static void help(SlashCommandEvent event) {
         Utils.replyEphemeral(event,
-                Utils.buildEmbed(
+                Utils.makeEmbed(
                         "AP Stats Bot - Info",
                         "Hi, I'm " + Utils.mentionMe() + ", a custom Discord bot designed to help AP " +
                         "Statistics students.",
@@ -71,10 +72,10 @@ public class GenericCommands {
                         Utils.makeField(
                                 "Development",
                                 "Making AP Stats Bot is a " +
-                                Utils.link("collaborative", Setting.GITHUB_LINK) + " effort. " +
+                                Utils.link("collaborative", Link.GITHUB) + " effort. " +
                                 "This project\u2014along with the popular " +
-                                Utils.link("survey", Setting.SURVEY_LINK) + " and " +
-                                Utils.link("FAQ", Setting.FAQ_LINK) + "\u2014was initially created by " +
+                                Utils.link("survey", Link.SURVEY) + " and " +
+                                Utils.link("FAQ", Link.FAQ) + "\u2014was initially created by " +
                                 Utils.mention(ID.SIMON) + ", but is now available for public feedback and " +
                                 "contributions."),
                         Utils.makeField(
@@ -87,9 +88,9 @@ public class GenericCommands {
                         Utils.makeField(
                                 "Other Info",
                                 "For answers to plenty of frequently asked questions, check out " +
-                                Utils.link("this document", Setting.FAQ_LINK) + " from the channel pins. " +
+                                Utils.link("this document", Link.FAQ) + " from the channel pins. " +
                                 "And in case you missed it, don't forget to take " +
-                                Utils.link("this survey", Setting.SURVEY_LINK) + " for AP Statistics students."
+                                Utils.link("this survey", Link.SURVEY) + " for AP Statistics students."
                         ),
                         Utils.makeField(
                                 "Prefix",
@@ -108,11 +109,11 @@ public class GenericCommands {
     public static void source(SlashCommandEvent event) {
         Utils.replyEphemeral(event,
                 Utils.addLinkButton(
-                        Utils.buildEmbed(
+                        Utils.makeEmbed(
                                 "Source Code",
                                 Utils.mentionMe() + " is completely open source. We welcome general " +
                                 "suggestions, simple bug fixes, and significant feature contributions. " +
-                                "Check out the code " + Utils.link("on github", Setting.GITHUB_LINK) + ".",
+                                "Check out the code " + Utils.link("on github", Link.GITHUB) + ".",
                                 Colors.INFO,
                                 "Want to see your name on the developer list? Make a pull request on github!",
                                 Utils.makeField(
@@ -120,7 +121,7 @@ public class GenericCommands {
                                         Utils.mention(ID.SIMON) + " - Founder and lead developer\n" +
                                         Utils.mention(ID.NOTSMART) + " - Minor feature contributor")
                         ),
-                        Setting.GITHUB_LINK,
+                        Link.GITHUB,
                         "Stats Bot on Github"));
 
     }
@@ -170,15 +171,15 @@ public class GenericCommands {
 
             // Build the actual embed
             faqMessage = Utils.addLinkButton(
-                    Utils.buildEmbed(
+                    Utils.makeEmbed(
                             "Frequently Asked Questions",
                             "Looking for answers to common questions? Check out this " +
-                            "handy AP Stats " + Utils.link("FAQ", Setting.FAQ_LINK) + ". It's based on data " +
-                            "from a " + Utils.link("survey", Setting.SURVEY_LINK) + " of over 100 past " +
+                            "handy AP Stats " + Utils.link("FAQ", Link.FAQ) + ". It's based on data " +
+                            "from a " + Utils.link("survey", Link.SURVEY) + " of over 100 past " +
                             "students.\n\n**__Table of Contents__**",
                             Colors.INFO,
                             fields.toArray(new MessageEmbed.Field[0])),
-                    Setting.FAQ_LINK,
+                    Link.FAQ,
                     "Open the FAQ"
             );
 

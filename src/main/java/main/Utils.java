@@ -28,7 +28,7 @@ public class Utils {
      * @param color       the color of the bar on the left of the embed
      * @return the newly created {@link EmbedBuilder}.
      */
-    public static EmbedBuilder buildEmbed(String title, String description, Color color) {
+    public static EmbedBuilder makeEmbed(String title, String description, Color color) {
         return new EmbedBuilder()
                 .setTitle(title)
                 .setDescription(description)
@@ -44,8 +44,8 @@ public class Utils {
      * @param fields      one or more {@link MessageEmbed.Field} instances placed beneath the description.
      * @return the newly created {@link EmbedBuilder}.
      */
-    public static EmbedBuilder buildEmbed(String title, String description, Color color, MessageEmbed.Field... fields) {
-        EmbedBuilder b = buildEmbed(title, description, color);
+    public static EmbedBuilder makeEmbed(String title, String description, Color color, MessageEmbed.Field... fields) {
+        EmbedBuilder b = makeEmbed(title, description, color);
 
         for (MessageEmbed.Field f : fields)
             b.addField(f.getName(), f.getValue(), f.isInline());
@@ -63,9 +63,9 @@ public class Utils {
      * @param fields      one or more {@link MessageEmbed.Field} instances placed beneath the description.
      * @return the newly created {@link EmbedBuilder}.
      */
-    public static EmbedBuilder buildEmbed(
+    public static EmbedBuilder makeEmbed(
             String title, String description, Color color, String footer, MessageEmbed.Field... fields) {
-        return buildEmbed(title, description, color, fields)
+        return makeEmbed(title, description, color, fields)
                 .setFooter(footer);
     }
 
@@ -207,5 +207,16 @@ public class Utils {
             e.printStackTrace();
             return new File("");
         }
+    }
+
+    /**
+     * This method wraps an {@link EmbedBuilder} in a {@link MessageBuilder} instance and builds it into a {@link
+     * Message}.
+     *
+     * @param embed the embed to convert to a message
+     * @return the fully built message for sending to Discord
+     */
+    public static Message buildEmbed(EmbedBuilder embed) {
+        return new MessageBuilder().setEmbeds(embed.build()).build();
     }
 }

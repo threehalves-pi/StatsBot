@@ -1,5 +1,6 @@
 package commands;
 
+import data.Link;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.ArrayList;
@@ -13,12 +14,6 @@ public record FAQEntry(String type, String text, String link) {
      * {@link GenericCommands#loadFAQTableOfContents()}.
      */
     public static final List<FAQEntry> entries = new ArrayList<>();
-
-    /**
-     * This is the base part of the Google docs link for the FAQ. Adding the link portion of each {@link FAQEntry} to
-     * this base link produces a section link to a specific header in the FAQ document.
-     */
-    public static final String BASE_LINK = "https://docs.google.com/document/d/1vzEopbD7GTql207P3lGk-egAjognligz1LpXyBAMCkM/edit#heading=";
 
     /**
      * This takes a line from <code>faq.csv</code> containing an faq entry in the format
@@ -46,6 +41,6 @@ public record FAQEntry(String type, String text, String link) {
      * @return the hyperlink for this entry
      */
     public String getHyperlink() {
-        return "[" + text + "](" + BASE_LINK + link + ")";
+        return "[" + text + "](" + Link.FAQ_HEADER + link + ")";
     }
 }

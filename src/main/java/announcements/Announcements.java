@@ -2,21 +2,33 @@ package announcements;
 
 import data.Colors;
 import data.ID;
+import data.Link;
 import data.Setting;
 import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.interactions.components.ActionRow;
-import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.internal.utils.JDALogger;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.*;
 
 public class Announcements {
+    /**
+     * This list contains all the possible announcement messages that the bot can choose from when it sends an
+     * announcement to the AP Students server.
+     */
+    private static final List<Message> announcements = new ArrayList<>();
+
+    /**
+     * This list contains relative weights that control the frequency with which each announcement is selected to send.
+     */
+    private static final List<Integer> weights = new ArrayList<>();
+
     public static final Logger LOG = JDALogger.getLog(Announcements.class);
     public static final ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
     public static final TimerTask announcementTask = new AnnounceTimer();
@@ -68,38 +80,40 @@ public class Announcements {
      * @return the announcement message to send
      */
     public static Message getAnnouncementMessage(int id) {
-        MessageBuilder message = new MessageBuilder();
+        return announcements.get(id);
+    }
 
-        switch (id) {
-            case 0 -> message
-                    .setEmbeds(
-                            announcementEmbed("Survey Reminder", "\uD83D\uDCE3",
-                                    "Have you taken AP Statistics already? Don't forget to complete " +
-                                    "[this survey](" + Setting.SURVEY_LINK + ") to help future students!").build())
-                    .setActionRows(
-                            ActionRow.of(Button.link(Setting.SURVEY_LINK, "Take the Survey!")));
+    /**
+     * This loads all the announcements into {@link #announcements} and their corresponding frequency weights into
+     * {@link #weights}. They will later be used to send announcements in the <code>#apstats</code> channel.
+     */
+    public static void loadAnnouncements() {
+        announcements.add(Utils.addLinkButton(
+                announcementEmbed("Survey Reminder", "\uD83D\uDCE3",
+                        "Have you taken AP Statistics already? Don't forget to complete " +
+                        Utils.link("this survey", Link.SURVEY) + " to help future students!"),
+                Link.SURVEY,
+                "Take the Survey!")
+        );
+        weights.add(2);
 
-            case 1 -> message
-                    .setEmbeds(
-                            announcementEmbed("Frequently Asked Questions", "\u2754",
-                                    "Are you new to AP Statistics? Check out " +
-                                    "[this FAQ](" + Setting.FAQ_LINK + ") from pins with plenty of pre-written " +
-                                    "answers to common questions.").build())
-                    .setActionRows(
-                            ActionRow.of(Button.link(Setting.FAQ_LINK, "View the FAQ!")));
+        announcements.add(Utils.addLinkButton(
+                announcementEmbed("Frequently Asked Questions", "\u2754",
+                        "Are you new to AP Statistics? Check out " +
+                        Utils.link("this FAQ", Link.FAQ) + " from pins with plenty of pre-written " +
+                        "answers to common questions."),
+                Link.FAQ,
+                "View the FAQ!")
+        );
+        weights.add(1);
 
-            case 2 -> message
-                    .setEmbeds(announcementEmbed("Question Help", "\uD83D\uDCDD",
-                            "Looking for help with a specific problem? See our " +
-                            "[guide](" + Setting.ASKING_QUESTIONS_FAQ_LINK + ") to asking good questions, " +
-                            "and don't forget to use <@" + ID.AP_BOT + ">'s `;question` command to ping helpers.")
-                            .build());
-
-            default -> {
-            }
-        }
-
-        return message.build();
+        announcements.add(Utils.buildEmbed(
+                announcementEmbed("Question Help", "\uD83D\uDCDD",
+                        "Looking for help with a specific problem? See our " +
+                        Utils.link("guide", Link.FAQ_ASKING_QUESTIONS) + " to asking good questions, " +
+                        "and don't forget to use " + Utils.mention(ID.AP_BOT) + "'s `;question` command to ping " +
+                        "helpers."))
+        );
     }
 
     /**
@@ -112,6 +126,6 @@ public class Announcements {
      * @return a brand new {@link EmbedBuilder}
      */
     private static EmbedBuilder announcementEmbed(@NotNull String title, @NotNull String emoji, @NotNull String description) {
-        return Utils.buildEmbed(emoji + "  " + title + "  " + emoji, description, Colors.ANNOUNCEMENTS);
+        return Utils.makeEmbed(emoji + "  " + title + "  " + emoji, description, Colors.ANNOUNCEMENTS);
     }
 }

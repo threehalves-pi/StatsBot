@@ -19,12 +19,6 @@ public class Setting {
 
     public static int ANNOUNCEMENT_DELAY = -1;
     public static int ANNOUNCEMENT_MESSAGES_CHECK = -1;
-    public static String SURVEY_LINK = "";
-    public static String FAQ_LINK = "";
-    public static String ASKING_QUESTIONS_FAQ_LINK = "";
-    public static String SURVEY_TEMPLATE = "";
-
-    public static String GITHUB_LINK = "";
 
     // Manually adjusted settings within code
     public static final long ANNOUNCEMENT_CHANNEL = ID.AP_STATS_CHANNEL;
@@ -51,14 +45,9 @@ public class Setting {
 
             ANNOUNCEMENT_DELAY = Integer.parseInt(properties.getProperty("announcement_delay"));
             ANNOUNCEMENT_MESSAGES_CHECK = Integer.parseInt(properties.getProperty("announcement_messages_check"));
-            SURVEY_LINK = properties.getProperty("survey_link");
-            FAQ_LINK = properties.getProperty("faq_link");
-            ASKING_QUESTIONS_FAQ_LINK = properties.getProperty("asking_questions_faq_link");
-            SURVEY_TEMPLATE = properties.getProperty("survey_template");
 
             LOAD_COMMANDS_GLOBAL = Boolean.parseBoolean(properties.getProperty("load_commands_global"));
             LOAD_COMMANDS_TESTING = Boolean.parseBoolean(properties.getProperty("load_commands_testing"));
-            GITHUB_LINK = properties.getProperty("github_link");
 
             LOG.info("Loaded settings from config.properties.");
 

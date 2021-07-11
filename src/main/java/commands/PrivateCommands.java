@@ -2,7 +2,6 @@ package commands;
 
 
 import data.Colors;
-import data.Setting;
 import main.Main;
 import main.Utils;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -11,7 +10,7 @@ import net.dv8tion.jda.api.interactions.components.Button;
 
 public class PrivateCommands {
     public static void testing(SlashCommandEvent event) {
-        Utils.replyEphemeral(event, Utils.buildEmbed(
+        Utils.replyEphemeral(event, Utils.makeEmbed(
                 "Title",
                 "Description",
                 Colors.INFO,

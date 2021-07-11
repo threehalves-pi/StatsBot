@@ -76,7 +76,7 @@ public class Startup extends ListenerAdapter {
 
         Discord.SIMON = Main.JDA.retrieveUserById(ID.SIMON).complete();
 
-        EmbedBuilder embed = Utils.buildEmbed(
+        EmbedBuilder embed = Utils.makeEmbed(
                 "Startup Log",
                 "Starting bot in `" + Main.MODE.getModeName() + "` mode.",
                 Colors.ADMIN,
@@ -99,9 +99,6 @@ public class Startup extends ListenerAdapter {
                         getCheckLine("Prefix", !Setting.PREFIX.equals("")) + "\n" +
                         getCheckLine("Status", Setting.STATUS != OnlineStatus.UNKNOWN) + "\n" +
                         getCheckLine("Dad bot", Setting.DAD_BOT_CHANCE != -1) + "\n" +
-                        getCheckLine("Survey link", !Setting.SURVEY_LINK.equals("")) + "\n" +
-                        getCheckLine("FAQ link", !Setting.FAQ_LINK.equals("")) + "\n" +
-                        getCheckLine("Questions link", !Setting.ASKING_QUESTIONS_FAQ_LINK.equals("")) + "\n" +
                         getCheckLine("Timer delay", Setting.ANNOUNCEMENT_DELAY != -1) + "\n" +
                         getCheckLine("Messages check", Setting.ANNOUNCEMENT_MESSAGES_CHECK != -1),
                         false)
