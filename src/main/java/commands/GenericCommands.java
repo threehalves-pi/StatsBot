@@ -21,7 +21,7 @@ public class GenericCommands {
      * This is the message sent in response to the <code>/faq</code> command. It is created by {@link
      * #loadFAQTableOfContents()} on startup.
      */
-    public static Message faqMessage;
+    private static Message faqMessage;
 
     public static void statsbot(SlashCommandEvent event) {
         event.reply("Hi!").setEphemeral(true).queue();
@@ -125,6 +125,10 @@ public class GenericCommands {
 
     }
 
+    public static void faq(SlashCommandEvent event) {
+        Utils.replyEphemeral(event, faqMessage);
+    }
+
     /**
      * This loads the table of contents for the AP Statistics FAQ from the <code>faq.csv</code> resource. Each line in
      * that file corresponds to a header or question in the document and contains a link to that section. This method
@@ -151,27 +155,32 @@ public class GenericCommands {
                     fields.add(Utils.makeField(entry.text(), ""));
                     field++;
                 } else {
+                    String header = fields.get(field).getName();
+                    String text = fields.get(field).getValue();
                     fields.set(
                             field,
                             Utils.makeField(
-                                    fields.get(field).getName(),
-                                    fields.get(field).getValue() + "\n" + item + ". " + entry.getHyperlink())
+                                    header,
+                                    text + (EmbedBuilder.ZERO_WIDTH_SPACE.equals(text) ? "" : "\n") +
+                                    item + ". " + entry.getHyperlink())
                     );
                     item++;
                 }
             }
 
             // Build the actual embed
-            EmbedBuilder embed = Utils.buildEmbed(
-                    "Frequently Asked Questions",
-                    "Looking for answers to common questions? Check out this " +
-                    "handy AP Stats " + Utils.link("FAQ", Setting.FAQ_LINK) + ". It's based on data " +
-                    "from a " + Utils.link("survey", Setting.SURVEY_LINK) + " of over 100 past " +
-                    "students.\n\n**__Table of Contents__**",
-                    Colors.INFO,
-                    fields.toArray(new MessageEmbed.Field[0]));
-
-            faqMessage = Utils.addLinkButton(embed, Setting.FAQ_LINK, "Open the FAQ");
+            faqMessage = Utils.addLinkButton(
+                    Utils.buildEmbed(
+                            "Frequently Asked Questions",
+                            "Looking for answers to common questions? Check out this " +
+                            "handy AP Stats " + Utils.link("FAQ", Setting.FAQ_LINK) + ". It's based on data " +
+                            "from a " + Utils.link("survey", Setting.SURVEY_LINK) + " of over 100 past " +
+                            "students.\n\n**__Table of Contents__**",
+                            Colors.INFO,
+                            fields.toArray(new MessageEmbed.Field[0])),
+                    Setting.FAQ_LINK,
+                    "Open the FAQ"
+            );
 
             Startup.LOG.info("Initialized /faq response message");
 

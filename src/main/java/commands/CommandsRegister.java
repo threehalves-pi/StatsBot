@@ -20,6 +20,7 @@ public class CommandsRegister {
         list.add(new CommandData("survey", "Get the AP Stats survey link"));
         list.add(new CommandData("help", "Get basic info on Stats Bot"));
         list.add(new CommandData("source", "See the bot's source code"));
+        list.add(new CommandData("faq", "Get a link to the AP Stats FAQ document"));
 
         commands.addCommands(list).queue(
                 s -> Startup.LOG.info("Pushed global slash commands.")
@@ -37,7 +38,6 @@ public class CommandsRegister {
 
         list.add(new CommandData("panel", "Update the StatsBot control panel"));
         list.add(new CommandData("testing", "Slash command tester"));
-        list.add(new CommandData("faq", "Get a link to the AP Stats FAQ document"));
 
         commands.addCommands(list).queue(
                 s -> Startup.LOG.info("Pushed private slash commands.")
