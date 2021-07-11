@@ -3,12 +3,26 @@ package commands;
 import data.Colors;
 import data.ID;
 import data.Setting;
+import events.Startup;
 import main.Utils;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
+import java.io.FileNotFoundException;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class GenericCommands {
+    /**
+     * This is the message sent in response to the <code>/faq</code> command. It is created by {@link
+     * #loadFAQTableOfContents()} on startup.
+     */
+    public static Message faqMessage;
+
     public static void statsbot(SlashCommandEvent event) {
         event.reply("Hi!").setEphemeral(true).queue();
     }
@@ -108,6 +122,63 @@ public class GenericCommands {
                         ),
                         Setting.GITHUB_LINK,
                         "Stats Bot on Github"));
+
+    }
+
+    /**
+     * This loads the table of contents for the AP Statistics FAQ from the <code>faq.csv</code> resource. Each line in
+     * that file corresponds to a header or question in the document and contains a link to that section. This method
+     * reads the table of contents data into a list of {@link FAQEntry} records and uses those to construct the {@link
+     * EmbedBuilder} sent in response to the <code>/faq</code> slash command.
+     */
+    public static void loadFAQTableOfContents() {
+        try {
+            List<MessageEmbed.Field> fields = new ArrayList<>();
+            Scanner in = new Scanner(Utils.getResourceFile("/faq.csv"));
+            // Omit the header line
+            in.nextLine();
+
+            // Counters for the current MessageEmbed.Field and question heading number
+            int field = -1;
+            int item = 1;
+
+            while (in.hasNextLine()) {
+                FAQEntry entry = FAQEntry.of(in.nextLine());
+                FAQEntry.entries.add(entry);
+
+                // If the next entry is a category, make a new field. If it's a question, add it to the previous field.
+                if (entry.type().equals("category")) {
+                    fields.add(Utils.makeField(entry.text(), ""));
+                    field++;
+                } else {
+                    fields.set(
+                            field,
+                            Utils.makeField(
+                                    fields.get(field).getName(),
+                                    fields.get(field).getValue() + "\n" + item + ". " + entry.getHyperlink())
+                    );
+                    item++;
+                }
+            }
+
+            // Build the actual embed
+            EmbedBuilder embed = Utils.buildEmbed(
+                    "Frequently Asked Questions",
+                    "Looking for answers to common questions? Check out this " +
+                    "handy AP Stats " + Utils.link("FAQ", Setting.FAQ_LINK) + ". It's based on data " +
+                    "from a " + Utils.link("survey", Setting.SURVEY_LINK) + " of over 100 past " +
+                    "students.\n\n**__Table of Contents__**",
+                    Colors.INFO,
+                    fields.toArray(new MessageEmbed.Field[0]));
+
+            faqMessage = Utils.addLinkButton(embed, Setting.FAQ_LINK, "Open the FAQ");
+
+            Startup.LOG.info("Initialized /faq response message");
+
+        } catch (FileNotFoundException e) {
+            Startup.LOG.error("Failed to load faq.csv data into /faq response message", e);
+            e.printStackTrace();
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 package events;
 
+import commands.GenericCommands;
 import data.*;
 import announcements.Announcements;
 import commands.CommandsRegister;
@@ -40,6 +41,9 @@ public class Startup extends ListenerAdapter {
         // Register private and testing slash commands if enabled
         if (Setting.LOAD_COMMANDS_TESTING)
             CommandsRegister.registerPrivateSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
+
+        // Load FAQ table of contents data and construct /faq response message
+        GenericCommands.loadFAQTableOfContents();
 
         // Initiate announcement timer
         Announcements.initiateTimer();

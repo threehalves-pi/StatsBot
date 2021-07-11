@@ -10,6 +10,9 @@ import net.dv8tion.jda.api.interactions.components.Button;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.Objects;
 
 /**
  * This class contains convenience methods for performing many common tasks. All of the methods here simply make coding
@@ -185,5 +188,24 @@ public class Utils {
      */
     public static String link(@NotNull String text, @NotNull String url) {
         return "[" + text + "](" + url + ")";
+    }
+
+    /**
+     * This returns a resource {@link File} with the given name. Note that this resource file is based off the {@link
+     * Utils} class with {@link #getClass()}, rather than the calling class. If the resource file was not found, a
+     * {@link File} instance with an empty path name is returned instead, and an exception is printed to the console.
+     * <p><br
+     * <b>Note:</b> don't forget to include a <b><code>/</code></b> before the name of the file.
+     *
+     * @param file the name of the file to retrieve
+     * @return the retrieved file, or a file with no path if a file with the given name was not found
+     */
+    public static @NotNull File getResourceFile(String file) {
+        try {
+            return new File(Objects.requireNonNull(Utils.class.getResource(file)).toURI());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            return new File("");
+        }
     }
 }
