@@ -1,6 +1,7 @@
 package commands;
 
 import data.Link;
+import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.util.ArrayList;
@@ -14,6 +15,12 @@ public record FAQEntry(String type, String text, String link) {
      * {@link GenericCommands#loadFAQTableOfContents()}.
      */
     public static final List<FAQEntry> entries = new ArrayList<>();
+
+    /**
+     * This is the same as {@link #entries}, except that it excludes categories in the FAQ document and only contains
+     * questions.
+     */
+    public static final List<FAQEntry> questions = new ArrayList<>();
 
     /**
      * This takes a line from <code>faq.csv</code> containing an faq entry in the format
@@ -41,6 +48,6 @@ public record FAQEntry(String type, String text, String link) {
      * @return the hyperlink for this entry
      */
     public String getHyperlink() {
-        return "[" + text + "](" + Link.FAQ_HEADER + link + ")";
+        return Utils.link(text,Link.FAQ_HEADER + link);
     }
 }

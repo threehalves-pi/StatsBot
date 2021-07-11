@@ -1,5 +1,6 @@
 package events;
 
+import commands.AdminCommands;
 import commands.PrivateCommands;
 import commands.GenericCommands;
 import main.Main;
@@ -14,12 +15,15 @@ public class SlashCommand extends ListenerAdapter {
 
         switch (event.getName()) {
 
-            // Generic commands
+            // Global generic commands
             case "statsbot" -> GenericCommands.statsbot(event);
             case "survey" -> GenericCommands.survey(event);
             case "help" -> GenericCommands.help(event);
             case "source" -> GenericCommands.source(event);
             case "faq" -> GenericCommands.faq(event);
+
+            // Global admin commands
+            case "link" -> AdminCommands.link(event);
 
             // Private commands
             case "panel" -> PrivateCommands.panel(event);

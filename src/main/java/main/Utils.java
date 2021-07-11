@@ -151,6 +151,7 @@ public class Utils {
         return addLinkButton(new MessageBuilder().setEmbeds(embedBuilder.build()), url, text);
     }
 
+    // TODO move all reply methods to EventUtils
     /**
      * This is a convenience method to send an ephemeral reply to a slash command.
      *
@@ -243,5 +244,24 @@ public class Utils {
         } catch (Exception e) {
             return "";
         }
+    }
+
+    /**
+     * This method sends a reply to a message.
+     * @param message the message to reply to
+     * @param reply the reply to send
+     */
+    public static void reply(Message message, Message reply) {
+        message.reply(reply).queue();
+    }
+
+    /**
+     * This method sends a reply to a message by enclosing it in a {@link MessageBuilder} and forwarding it to
+     * {@link #reply(Message, Message)}.
+     * @param message the message to reply to
+     * @param reply the reply to send
+     */
+    public static void reply(Message message, String reply) {
+        reply(message, new MessageBuilder(reply).build());
     }
 }

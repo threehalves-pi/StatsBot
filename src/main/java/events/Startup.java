@@ -35,13 +35,17 @@ public class Startup extends ListenerAdapter {
         // Locate necessary Discord entities and print startup log
         printStartupLog();
 
-        // Register global slash commands if enabled
-        if (Setting.LOAD_COMMANDS_GLOBAL)
+        // Register global slash commands if enabled in settings (and bot mode includes global slash commands)
+        if (Main.MODE.allows(BotMode.Mode.GLOBAL_SLASH_COMMANDS) && Setting.LOAD_COMMANDS_GLOBAL)
             CommandsRegister.registerGlobalSlashCommands(Main.JDA.updateCommands());
 
-        // Register private and testing slash commands if enabled
-        if (Setting.LOAD_COMMANDS_TESTING)
+        // Register private and testing slash commands if enabled in settings (and bot mode includes private commands)
+        if (Main.MODE.allows(BotMode.Mode.PRIVATE_SLASH_COMMANDS) && Setting.LOAD_COMMANDS_TESTING)
             CommandsRegister.registerPrivateSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
+
+        // Set global slash command permissions if enabled in settings (and bot mode includes global slash commands)
+        if (Main.MODE.allows(BotMode.Mode.GLOBAL_SLASH_COMMANDS) && Setting.LOAD_GLOBAL_PRIVILEGES)
+            CommandsRegister.setCommandPrivileges();
 
         // Load FAQ table of contents data and construct /faq response message
         GenericCommands.loadFAQTableOfContents();

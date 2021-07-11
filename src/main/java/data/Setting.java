@@ -9,18 +9,27 @@ import java.util.Properties;
 
 public class Setting {
     // Settings imported from config.properties resource
-    public static String VERSION = "";
 
+    // Main bot settings
+    public static String VERSION = "";
     public static String PREFIX = "";
     public static OnlineStatus STATUS = OnlineStatus.UNKNOWN;
-    public static double DAD_BOT_CHANCE = -1;
+
+    // Startup settings
     public static boolean LOAD_COMMANDS_GLOBAL = false;
     public static boolean LOAD_COMMANDS_TESTING = false;
+    public static boolean LOAD_GLOBAL_PRIVILEGES = false;
 
+    // Announcement settings
     public static int ANNOUNCEMENT_DELAY = -1;
     public static int ANNOUNCEMENT_MESSAGES_CHECK = -1;
 
+    // Miscellaneous settings
+    public static double DAD_BOT_CHANCE = -1;
+
+
     // Manually adjusted settings within code
+
     public static final long ANNOUNCEMENT_CHANNEL = ID.AP_STATS_CHANNEL;
 
 
@@ -36,18 +45,22 @@ public class Setting {
             InputStream in = new FileInputStream("resources/config.properties");
             properties.load(in);
 
-
+            // Main bot settings
             PREFIX = properties.getProperty("prefix");
             STATUS = OnlineStatus.fromKey(properties.getProperty("status"));
             VERSION = properties.getProperty("version");
 
-            DAD_BOT_CHANCE = Double.parseDouble(properties.getProperty("dad_bot_chance"));
-
+            // Announcement settings
             ANNOUNCEMENT_DELAY = Integer.parseInt(properties.getProperty("announcement_delay"));
             ANNOUNCEMENT_MESSAGES_CHECK = Integer.parseInt(properties.getProperty("announcement_messages_check"));
 
+            // Startup settings
             LOAD_COMMANDS_GLOBAL = Boolean.parseBoolean(properties.getProperty("load_commands_global"));
             LOAD_COMMANDS_TESTING = Boolean.parseBoolean(properties.getProperty("load_commands_testing"));
+            LOAD_GLOBAL_PRIVILEGES = Boolean.parseBoolean(properties.getProperty("load_global_privileges"));
+
+            // Miscellaneous settings
+            DAD_BOT_CHANCE = Double.parseDouble(properties.getProperty("dad_bot_chance"));
 
             LOG.info("Loaded settings from config.properties");
 

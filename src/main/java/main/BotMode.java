@@ -22,10 +22,44 @@ import java.util.List;
  * StatsBot Central).
  */
 public class BotMode {
+
+    /**
+     * These modes indicate the different types of events that the bot might encounter. Adding a {@link Mode} to the
+     * {@link BotMode} will cause the bot to react to events included within that mode.
+     */
+    public enum Mode {
+        /**
+         * All Discord messages, reactions, and button clicks received in servers that are <b>not</b> {@link
+         * Discord#STATSBOT_CENTRAL}
+         */
+        SERVER_MESSAGES,
+
+        /**
+         * All Discord messages, reactions, and buttons clicks received in DMs
+         */
+        DIRECT_MESSAGES,
+
+        /**
+         * All Discord messages, reactions, and button clicks received in {@link Discord#STATSBOT_CENTRAL}
+         */
+        STATSBOT_CENTRAL_MESSAGES,
+
+        /**
+         * All global slash commands (as used in all servers)
+         */
+        GLOBAL_SLASH_COMMANDS,
+
+        /**
+         * Private slash commands registered to {@link Discord#STATSBOT_CENTRAL}
+         */
+        PRIVATE_SLASH_COMMANDS
+    }
+
     /**
      * This is the list of currently enabled modes for this {@link BotMode} instance.
      */
     private final List<Mode> modes;
+
     private final String modeName;
 
     /**
@@ -54,7 +88,7 @@ public class BotMode {
      *
      * @param modeName the name of the custom {@link BotMode} (omit for "custom"). This is used in the {@link Startup}
      *                 log
-     * @param modes one or more {@link Mode} enums to enable.
+     * @param modes    one or more {@link Mode} enums to enable.
      * @return the new {@link BotMode} instance
      */
     public static BotMode of(String modeName, Mode... modes) {
@@ -105,6 +139,7 @@ public class BotMode {
 
     /**
      * This returns the custom mode name assigned to this {@link BotMode} at creation.
+     *
      * @return the mode name
      */
     public String getModeName() {
@@ -132,6 +167,16 @@ public class BotMode {
      */
     public boolean ignores(Mode mode) {
         return !modes.contains(mode);
+    }
+
+    /**
+     * This checks whether the current {@link BotMode} implements the given {@link Mode}.
+     *
+     * @param mode the mode to check
+     * @return true if the given mode is implemented; false if events associated with that mode should be ignored
+     */
+    public boolean allows(Mode mode) {
+        return modes.contains(mode);
     }
 
     /**
@@ -180,32 +225,5 @@ public class BotMode {
             return ignores(Mode.STATSBOT_CENTRAL_MESSAGES);
         else
             return ignores(Mode.SERVER_MESSAGES);
-    }
-
-    enum Mode {
-        /**
-         * All Discord messages received in servers that are not {@link Discord#STATSBOT_CENTRAL}
-         */
-        SERVER_MESSAGES,
-
-        /**
-         * All Discord messages received in DMs
-         */
-        DIRECT_MESSAGES,
-
-        /**
-         * All Discord messages received in {@link Discord#STATSBOT_CENTRAL}
-         */
-        STATSBOT_CENTRAL_MESSAGES,
-
-        /**
-         * All global slash commands (as used in all servers)
-         */
-        GLOBAL_SLASH_COMMANDS,
-
-        /**
-         * Private slash commands registered to {@link Discord#STATSBOT_CENTRAL}
-         */
-        PRIVATE_SLASH_COMMANDS
     }
 }

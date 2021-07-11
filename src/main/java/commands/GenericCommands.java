@@ -156,6 +156,8 @@ public class GenericCommands {
                     fields.add(Utils.makeField(entry.text(), ""));
                     field++;
                 } else {
+                    FAQEntry.questions.add(entry);
+
                     String header = fields.get(field).getName();
                     String text = fields.get(field).getValue();
                     fields.set(
