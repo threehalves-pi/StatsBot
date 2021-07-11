@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class Main {
     public static JDA JDA;
-    public static final BotMode MODE = BotMode.testing();
+    public static final BotMode MODE = BotMode.running();
 
     public static void main(String[] args) throws IOException, LoginException {
         String token = new String(
