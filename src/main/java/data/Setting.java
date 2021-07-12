@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.internal.utils.JDALogger;
 import org.slf4j.Logger;
 
-import java.io.*;
 import java.util.Properties;
 
 public class Setting {
@@ -42,8 +41,7 @@ public class Setting {
      */
     public static void importSettings() {
         try {
-            InputStream in = new FileInputStream("resources/config.properties");
-            properties.load(in);
+            properties.load(Setting.class.getResourceAsStream("/config.properties"));
 
             // Main bot settings
             PREFIX = properties.getProperty("prefix");
@@ -66,23 +64,6 @@ public class Setting {
 
         } catch (Exception e) {
             LOG.error("Failed to import settings from config.properties", e);
-        }
-    }
-
-    /**
-     * Saves the current settings to the config.properties file.
-     *
-     * Deprecated due to annoyingly overwriting comments in config.properties on save. Scheduled for eventual
-     * removal and transfer of config.properties to standard resources directory for main module.
-     */
-    @Deprecated
-    public static void saveSettings() {
-        try {
-            OutputStream out = new FileOutputStream("resources/config.properties");
-            properties.store(out, "Properties updated");
-            LOG.info("Saved config.properties.");
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

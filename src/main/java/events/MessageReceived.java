@@ -1,16 +1,13 @@
 package events;
 
 import announcements.Announcements;
-import commands.CommandsRegister;
 import commands.FAQEntry;
-import commands.GenericCommands;
 import data.Colors;
 import data.ID;
 import data.Link;
 import data.Setting;
 import main.Main;
 import main.Utils;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageType;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
