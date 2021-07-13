@@ -1,6 +1,6 @@
 package events;
 
-import announcements.Announcements;
+import announcements.AnnouncementLoader;
 import commands.FAQEntry;
 import data.Colors;
 import data.ID;
@@ -35,7 +35,7 @@ public class MessageReceived extends ListenerAdapter {
 
         // Whenever a message is sent in the announcements channel, the timer must be reset
         if (event.getChannel().getIdLong() == Setting.ANNOUNCEMENT_CHANNEL)
-            Announcements.resetTimer();
+            AnnouncementLoader.resetTimer();
 
         if (isMentioned(event))
             return;

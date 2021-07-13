@@ -1,7 +1,7 @@
 package commands;
 
 
-import announcements.Announcements;
+import announcements.AnnouncementLoader;
 import data.Colors;
 import data.ID;
 import events.EventUtils;
@@ -41,12 +41,12 @@ public class PrivateCommands {
 
         if ("list".equals(sub)) {
             StringBuilder list = new StringBuilder();
-            for (int i = 0; i < Announcements.getAnnouncementCount(); i++)
+            for (int i = 0; i < AnnouncementLoader.getAnnouncementCount(); i++)
                 list
                         .append("\n")
                         .append(i)
                         .append(". ")
-                        .append(Utils.getEmbedTitle(Announcements.getAnnouncementMessage(i)));
+                        .append(Utils.getEmbedTitle(AnnouncementLoader.getAnnouncementMessage(i)));
 
             Utils.replyEphemeral(
                     event,
@@ -63,13 +63,13 @@ public class PrivateCommands {
         int id;
         try {
             id = (int) Objects.requireNonNull(event.getOption("id")).getAsLong();
-            assert id >= 0 && id < Announcements.getAnnouncementCount();
+            assert id >= 0 && id < AnnouncementLoader.getAnnouncementCount();
         } catch (Exception e) {
-            id = Announcements.getRandomId();
+            id = AnnouncementLoader.getRandomId();
         }
 
         if ("get".equals(sub)) {
-            Utils.replyEphemeral(event, Announcements.getAnnouncementMessage(id));
+            Utils.replyEphemeral(event, AnnouncementLoader.getAnnouncementMessage(id));
             return;
         }
 
@@ -87,7 +87,7 @@ public class PrivateCommands {
             TextChannel channel = Main.JDA.getTextChannelById(ID.AP_STATS_CHANNEL);
             assert channel != null;
             int idF = id;
-            channel.sendMessage(Announcements.getAnnouncementMessage(id)).queue(
+            channel.sendMessage(AnnouncementLoader.getAnnouncementMessage(id)).queue(
                     s -> event.getHook().editOriginal(
                             "Sent announcement " + idF + " to " + channel.getAsMention() + ".").queue(),
                     f -> {

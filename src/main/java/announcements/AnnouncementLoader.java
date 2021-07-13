@@ -4,7 +4,6 @@ import data.Colors;
 import data.ID;
 import data.Link;
 import data.Setting;
-import events.Startup;
 import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -17,29 +16,57 @@ import java.util.List;
 import java.util.TimerTask;
 import java.util.concurrent.*;
 
-public class Announcements {
+public class AnnouncementLoader {
     /**
      * This list contains all the possible announcement messages that the bot can choose from when it sends an
      * announcement to the AP Students server.
      */
-    private static final List<Message> announcements = new ArrayList<>();
+    private static final List<Announcement> announcements = new ArrayList<>();
 
-    /**
-     * This list contains relative weights that control the frequency with which each announcement is selected to send.
-     * <p><br>
-     * When initially added, the weights should be simple integers with no specific scale. 1 is the default weight that
-     * should be assigned to unimportant announcements. Higher numbers can be used for announcements that should be
-     * displayed more frequently.
-     * <p><br>
-     * After creating all the announcements with {@link #loadAnnouncements()}, the weights are automatically adjusted to
-     * fit on a 0-1 scale.
-     */
-    private static final List<Double> weights = new ArrayList<>();
-
-    public static final Logger LOG = JDALogger.getLog(Announcements.class);
+    public static final Logger LOG = JDALogger.getLog(AnnouncementLoader.class);
     public static final ScheduledExecutorService timer = Executors.newSingleThreadScheduledExecutor();
     public static final TimerTask announcementTask = new AnnounceTimer();
     public static ScheduledFuture<?> schedule;
+
+    /**
+     * This loads all the announcements into {@link #announcements} and their corresponding frequency weights into
+     * weights. They will later be used to send announcements in the <code>#apstats</code> channel.
+     */
+    public static void loadAnnouncements() {
+        announcements.add(new Announcement(
+                "Survey Reminder",
+                "\uD83D\uDCE3",
+                "Have you taken AP Statistics already? Don't forget to complete " +
+                Utils.link("this survey", Link.SURVEY) + " to help future students!",
+                Link.SURVEY,
+                "Take the Survey!",
+                2
+        ).prepareBuild());
+
+        announcements.add(new Announcement(
+                "Frequently Asked Questions",
+                "\u2754",
+                "Are you new to AP Statistics? Check out " +
+                Utils.link("this FAQ", Link.FAQ) + " from pins with plenty of pre-written " +
+                "answers to common questions.",
+                Link.FAQ,
+                "View the FAQ!",
+                1
+        ));
+
+        announcements.add(new Announcement(
+                "Question Help",
+                "\uD83D\uDCDD",
+                "Looking for help with a specific problem? See our " +
+                Utils.link("guide", Link.FAQ_ASKING_QUESTIONS) + " to asking good questions, " +
+                "and don't forget to use " + Utils.mention(ID.AP_BOT) + "'s `;question` command to ping " +
+                "helpers.",
+                1
+        ));
+
+        weightAnnouncements();
+        LOG.info("Loaded pre-written announcements");
+    }
 
     /**
      * Configures an instance of {@link AnnounceTimer} to send periodic announcements to Discord. This is done by simply
@@ -81,33 +108,33 @@ public class Announcements {
      * @return the announcement message to send
      */
     public static Message getAnnouncementMessage(int id) {
-        return announcements.get(id);
+        return announcements.get(id).getMessage();
     }
 
     /**
      * Returns a random announcement message from {@link #announcements} to post to Discord. The random assignment is
-     * based on the announcement {@link #weights}. This method works by simply using {@link #getRandomId()} to obtain an
-     * id and retrieving the corresponding announcement from the {@link #announcements} list.
+     * based on the announcement weights. This method works by simply using {@link #getRandomId()} to obtain an id and
+     * retrieving the corresponding announcement from the {@link #announcements} list.
      *
      * @return the announcement message to send
      */
     public static Message getAnnouncementMessage() {
-        return announcements.get(getRandomId());
+        return announcements.get(getRandomId()).getMessage();
     }
 
     /**
-     * This returns a random announcement ID based on the announcement {@link #weights}.
+     * This returns a random announcement ID based on the announcement weights.
      *
      * @return a random announcement id
      */
     public static int getRandomId() {
         double r = Math.random();
-        for (int i = 0; i < announcements.size(); i++)
-            if (weights.get(i) >= r)
+        for (int i = 0; i < announcements.size() - 1; i++)
+            if (announcements.get(i).getWeight() >= r)
                 return i;
+            else
+                r -= announcements.get(i).getWeight();
 
-        // This line shouldn't be reached--but if it is, simply return the last announcement id, as there was probably
-        // a rounding error.
         return announcements.size() - 1;
     }
 
@@ -122,55 +149,18 @@ public class Announcements {
     }
 
     /**
-     * This loads all the announcements into {@link #announcements} and their corresponding frequency weights into
-     * {@link #weights}. They will later be used to send announcements in the <code>#apstats</code> channel.
+     * This converts announcement weights from relative integers to a 0-1 scale designed for comparison against {@link
+     * Math#random()}.
      */
-    public static void loadAnnouncements() {
-        announcements.add(Utils.addLinkButton(
-                announcementEmbed("Survey Reminder",
-                        "\uD83D\uDCE3",
-                        "Have you taken AP Statistics already? Don't forget to complete " +
-                        Utils.link("this survey", Link.SURVEY) + " to help future students!"),
-                Link.SURVEY,
-                "Take the Survey!")
-        );
-        weights.add(2.0);
-
-        announcements.add(Utils.addLinkButton(
-                announcementEmbed("Frequently Asked Questions",
-                        "\u2754",
-                        "Are you new to AP Statistics? Check out " +
-                        Utils.link("this FAQ", Link.FAQ) + " from pins with plenty of pre-written " +
-                        "answers to common questions."),
-                Link.FAQ,
-                "View the FAQ!")
-        );
-        weights.add(1.0);
-
-        announcements.add(Utils.buildEmbed(
-                announcementEmbed("Question Help",
-                        "\uD83D\uDCDD",
-                        "Looking for help with a specific problem? See our " +
-                        Utils.link("guide", Link.FAQ_ASKING_QUESTIONS) + " to asking good questions, " +
-                        "and don't forget to use " + Utils.mention(ID.AP_BOT) + "'s `;question` command to ping " +
-                        "helpers.")
-                )
-        );
-        weights.add(1.0);
-
+    private static void weightAnnouncements() {
         // Compute the total sum of all the raw weights
         double sum = 0;
-        for (double d : weights)
-            sum += d;
+        for (Announcement a : announcements)
+            sum += a.getWeight();
 
-        // Adjust all the weights to fit a 0-1 scale for comparison with Math.random().
-        double cumulative = 0;
-        for (int i = 0; i < weights.size(); i++) {
-            cumulative += weights.get(i) / sum;
-            weights.set(i, cumulative);
-        }
-
-        Startup.LOG.info("Loaded pre-written announcements");
+        // Adjust all the weights to their relative probabilities
+        for (Announcement announcement : announcements)
+            announcement.setWeight(announcement.getWeight() / sum);
     }
 
     /**

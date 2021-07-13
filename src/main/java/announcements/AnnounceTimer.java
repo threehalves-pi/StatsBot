@@ -22,15 +22,15 @@ public class AnnounceTimer extends TimerTask {
             // Validate the channel to confirm that an announcement can be sent right now.
             // If validation fails, disable the timer. (It'll restart when another message is sent in the channel)
             if (!validateChannel(channel)) {
-                Announcements.LOG.warn("Channel validation failed. Postponing...");
-                Announcements.clearTimer();
+                AnnouncementLoader.LOG.warn("Channel validation failed. Postponing...");
+                AnnouncementLoader.clearTimer();
                 return;
             }
 
-            channel.sendMessage(Announcements.getAnnouncementMessage())
-                    .queue(s -> Announcements.LOG.info("Posted scheduled announcement."));
+            channel.sendMessage(AnnouncementLoader.getAnnouncementMessage())
+                    .queue(s -> AnnouncementLoader.LOG.info("Posted scheduled announcement."));
         } catch (Exception e) {
-            Announcements.LOG.error("Failed to send announcement.", e);
+            AnnouncementLoader.LOG.error("Failed to send announcement.", e);
         }
     }
 
@@ -66,7 +66,7 @@ public class AnnounceTimer extends TimerTask {
             return true;
 
         } catch (Exception e) {
-            Announcements.LOG.error("Failed to scan messages for announcement.", e);
+            AnnouncementLoader.LOG.error("Failed to scan messages for announcement.", e);
             return false;
         }
     }

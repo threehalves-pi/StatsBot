@@ -2,7 +2,7 @@ package events;
 
 import commands.GenericCommands;
 import data.*;
-import announcements.Announcements;
+import announcements.AnnouncementLoader;
 import commands.CommandsRegister;
 import main.*;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -51,10 +51,11 @@ public class Startup extends ListenerAdapter {
         GenericCommands.loadFAQTableOfContents();
 
         // Load all the announcement messages
-        Announcements.loadAnnouncements();
+        AnnouncementLoader.loadAnnouncements();
 
-        // Initiate announcement timer
-        Announcements.initiateTimer();
+        // Initiate announcement timer if this bot instance is for AP Students
+        if (Main.MODE.allows(BotMode.Mode.SERVER_MESSAGES))
+            AnnouncementLoader.initiateTimer();
 
         LOG.info("Finished startup!");
         System.out.println();
