@@ -74,8 +74,20 @@ public class AnnouncementLoader {
                         Discord.EMOJI_BOOKS,
                         "Looking for high quality AP Statistics resources? Check out our " +
                         Utils.link("resources list", FAQEntry.entries.get(0).getFullLink()) +
-                        " for college board resources, textbooks, prep books, practice exams, curriculua, and more.",
+                        " for college board resources, textbooks, prep books, practice exams, curricula, and more.",
                         1
+                ).prepareBuild()
+        );
+
+        announcements.add(
+                new Announcement(
+                        "Update AP Scores",
+                        Discord.EMOJI_NEWSPAPER,
+                        "Was your AP Statistics score released? Don't forget to update your " +
+                        Utils.link("survey response", Link.SURVEY) + "!",
+                        Link.SURVEY,
+                        "AP Stats Survey",
+                        2
                 ).prepareBuild()
         );
 

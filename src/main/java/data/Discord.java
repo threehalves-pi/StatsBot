@@ -34,8 +34,11 @@ public class Discord {
     // For a five character unicode emoji converter, see
     // http://www.russellcottrell.com/greek/utilities/SurrogatePairCalculator.htm
 
+    public static final String EMOJI_X = "\u274C";
+
     public static final String EMOJI_MEGA = "\uD83D\uDCE3";
     public static final String EMOJI_GREY_QUESTION = "\u2754";
     public static final String EMOJI_PENCIL = "\uD83D\uDCDD";
     public static final String EMOJI_BOOKS = "\uD83D\uDCDA";
+    public static final String EMOJI_NEWSPAPER = "\uD83D\uDCF0";
 }

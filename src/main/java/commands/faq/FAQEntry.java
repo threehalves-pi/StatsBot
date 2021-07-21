@@ -39,10 +39,6 @@ public record FAQEntry(String type, String text, String link) {
         return entries.size();
     }
 
-    public static void addEntry(FAQEntry entry) {
-
-    }
-
     /**
      * This takes a line from <code>faq.csv</code> containing an faq entry in the format
      * <br>

@@ -1,9 +1,6 @@
 package main;
 
-import events.ButtonClick;
-import events.MessageReceived;
-import events.SlashCommand;
-import events.Startup;
+import events.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
@@ -14,7 +11,7 @@ import java.util.Objects;
 
 public class Main {
     public static JDA JDA;
-    public static BotMode MODE = BotMode.running();
+    public static BotMode MODE = BotMode.all();
 
     public static void main(String[] args) throws IOException, LoginException {
         String token = new String(
@@ -27,6 +24,7 @@ public class Main {
                 .addEventListeners(new Startup())
                 .addEventListeners(new SlashCommand())
                 .addEventListeners(new ButtonClick())
+                .addEventListeners(new OnReaction())
                 .build();
     }
 }

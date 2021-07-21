@@ -14,8 +14,6 @@ import net.dv8tion.jda.internal.utils.JDALogger;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 
-import java.util.Objects;
-
 public class Startup extends ListenerAdapter {
     public static final Logger LOG = JDALogger.getLog(Startup.class);
 

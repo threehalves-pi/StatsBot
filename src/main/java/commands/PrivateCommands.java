@@ -3,7 +3,6 @@ package commands;
 
 import announcements.AnnouncementLoader;
 import data.Colors;
-import data.Discord;
 import data.ID;
 import events.EventUtils;
 import main.Main;

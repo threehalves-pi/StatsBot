@@ -1,25 +1,19 @@
 package events;
 
-import announcements.Announcement;
 import announcements.AnnouncementLoader;
 import commands.faq.FAQEntry;
 import data.*;
 import main.BotMode;
 import main.Main;
 import main.Utils;
-import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageType;
-import net.dv8tion.jda.api.entities.PrivateChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class MessageReceived extends ListenerAdapter {
 
@@ -89,7 +83,7 @@ public class MessageReceived extends ListenerAdapter {
             case "mode" -> {
                 try {
                     if (args.length < 2) {
-                        message.reply("I am currently running on `" + Main.MODE.getModeName() + "`\n" +
+                        message.reply("I am currently running mode `" + Main.MODE.getModeName() + "`.\n\n" +
                                       "To change the bot mode, type `" + Setting.PREFIX + "mode [mode]`, where " +
                                       "`[mode]` is one of `running`, `testing`, or `all`.").queue();
                         return true;
