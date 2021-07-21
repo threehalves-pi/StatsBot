@@ -28,12 +28,6 @@ public class EventUtils {
             return channelId != ID.AP_STATS_CHANNEL && channelId != ID.BOT_COMMANDS_CHANNEL;
         }
 
-        // If the event was triggered in StatsBot Central, only allow certain channels
-        if (guildId == ID.STATSBOT_CENTRAL_GUILD) {
-            // Only allow #ap-stats and #private-testing
-            return channelId != ID.AP_STATS_STATSBOT_CHANNEL && channelId != ID.PRIVATE_TESTING_CHANNEL;
-        }
-
         // If channel is unknown, do NOT ignore it
         return false;
     }

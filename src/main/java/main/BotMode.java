@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
@@ -52,7 +53,7 @@ public class BotMode {
         /**
          * Private slash commands registered to {@link Discord#STATSBOT_CENTRAL}
          */
-        PRIVATE_SLASH_COMMANDS
+        PRIVATE_SLASH_COMMANDS;
     }
 
     /**
@@ -180,6 +181,22 @@ public class BotMode {
     }
 
     /**
+     * This obtains one of the preset {@link BotMode Botmodes} (either <code>running</code>, <code>testing</code>, or
+     * <code>all</code>) by specifying the name of that mode.
+     *
+     * @param name the name of the mode preset (case in-sensitive)
+     * @return the desired {@link BotMode}, or <code>null</code> if the given name was not recognized
+     */
+    public static @Nullable BotMode fromName(@NotNull String name) {
+        return switch (name) {
+            case "running" -> running();
+            case "testing" -> testing();
+            case "all" -> all();
+            default -> null;
+        };
+    }
+
+    /**
      * This determines if a given {@link net.dv8tion.jda.api.JDA} {@link Event} should be ignored according to the bot's
      * current {@link BotMode}. If the event should be ignored, true is returned, and all event processing should cease
      * immediately.
@@ -192,7 +209,7 @@ public class BotMode {
         // If the event is an incoming message or button click, determine if it is a DM,
         // StatsBot Central message, or other server, and respond accordingly.
         if (event instanceof MessageReceivedEvent e)
-            return ignoreEvent(e.isFromGuild(), e.getGuild());
+            return ignoreEvent(e.isFromGuild(), e.isFromGuild() ? e.getGuild() : null);
         if (event instanceof ButtonClickEvent e)
             return ignoreEvent(e.isFromGuild(), e.getGuild());
 

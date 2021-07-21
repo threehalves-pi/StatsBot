@@ -3,6 +3,7 @@ package commands;
 
 import announcements.AnnouncementLoader;
 import data.Colors;
+import data.Discord;
 import data.ID;
 import events.EventUtils;
 import main.Main;
@@ -17,7 +18,7 @@ import java.util.Objects;
 public class PrivateCommands {
 
     public static void testing(SlashCommandEvent event) {
-        Utils.replyEphemeral(event, "There's nothing to test right now.");
+        Utils.replyEphemeral(event, "Testing...");
     }
 
     public static void panel(SlashCommandEvent event) {

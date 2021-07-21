@@ -1,5 +1,6 @@
-package commands;
+package commands.faq;
 
+import commands.GenericCommands;
 import data.Link;
 import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -21,6 +22,26 @@ public record FAQEntry(String type, String text, String link) {
      * questions.
      */
     public static final List<FAQEntry> questions = new ArrayList<>();
+
+    /**
+     * Get a {@link FAQEntry} by its index in {@link #entries}. Note that this list is 1 indexed, meaning the first
+     * entry has an index of 1. For a complete list of entries and corresponding ids, use the <code>/faq</code> command
+     * in Discord.
+     *
+     * @param index the index of the desired entry. Note that this ranges from 1 to {@link #getEntryCount()}.
+     * @return the {@link FAQEntry} at the specified index
+     */
+    public static FAQEntry getEntry(int index) {
+        return entries.get(index - 1);
+    }
+
+    public static int getEntryCount() {
+        return entries.size();
+    }
+
+    public static void addEntry(FAQEntry entry) {
+
+    }
 
     /**
      * This takes a line from <code>faq.csv</code> containing an faq entry in the format

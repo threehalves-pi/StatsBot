@@ -1,20 +1,25 @@
 package events;
 
+import announcements.Announcement;
 import announcements.AnnouncementLoader;
-import commands.FAQEntry;
-import data.Colors;
-import data.ID;
-import data.Link;
-import data.Setting;
+import commands.faq.FAQEntry;
+import data.*;
+import main.BotMode;
 import main.Main;
 import main.Utils;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageType;
+import net.dv8tion.jda.api.entities.PrivateChannel;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.restaction.MessageAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MessageReceived extends ListenerAdapter {
 
@@ -44,6 +49,9 @@ public class MessageReceived extends ListenerAdapter {
         if (EventUtils.ignoreChannel(event.getChannel()))
             return;
 
+        if (checkAdminCommand(event))
+            return;
+
         if (checkDadBot(event))
             return;
 
@@ -52,6 +60,77 @@ public class MessageReceived extends ListenerAdapter {
 
         // If the message uses the bot's prefix, check for recognized commands
         processPrefixedCommands(event);
+    }
+
+    /**
+     * Check to see if the provided message is an admin command (according to {@link EventUtils#isAdmin(User)}. If it
+     * is, return <code>true</code>. Otherwise, return <code>false</code>.
+     *
+     * @param event the message event
+     * @return <code>true</code> if it is an admin command from {@link Discord#SIMON}; <code>false</code> otherwise.
+     */
+    private boolean checkAdminCommand(MessageReceivedEvent event) {
+        // Make sure the message is from an admin
+        if (!EventUtils.isAdmin(event.getAuthor()))
+            return false;
+
+        Message message = event.getMessage();
+        String content = message.getContentDisplay().trim();
+
+        // Make sure the message uses the bot's prefix
+        if (content.toLowerCase(Locale.ROOT).startsWith(Setting.PREFIX))
+            content = content.substring(Setting.PREFIX.length());
+        else
+            return false;
+
+        String[] args = content.toLowerCase(Locale.ROOT).split("\\s+");
+
+        switch (args[0]) {
+            case "mode" -> {
+                try {
+                    if (args.length < 2) {
+                        message.reply("I am currently running on `" + Main.MODE.getModeName() + "`\n" +
+                                      "To change the bot mode, type `" + Setting.PREFIX + "mode [mode]`, where " +
+                                      "`[mode]` is one of `running`, `testing`, or `all`.").queue();
+                        return true;
+                    }
+
+                    BotMode newMode = BotMode.fromName(args[1]);
+                    assert newMode != null;
+                    if (newMode == Main.MODE)
+                        message.reply("I'm already running mode `" + newMode.getModeName() + "`").queue();
+                    else {
+                        Main.MODE = newMode;
+                        message.reply("Updated mode to `" + newMode.getModeName() + "`").queue();
+                    }
+
+                } catch (Exception e) {
+                    message.reply("Sorry, I don't recognize that mode. Please use one of" +
+                                  "`running`, `testing`, or `all`.").queue();
+                }
+            }
+            case "help" -> message.replyEmbeds(
+                    Utils.makeEmbed(
+                            "Admin Commands",
+                            "Here are all the admin commands I currently support:\n" +
+                            "`" + Setting.PREFIX + "mode [mode]` - Change the current BotMode\n" +
+                            "`" + Setting.PREFIX + "help` - View this help panel",
+                            Colors.ADMIN)
+                            .build())
+                    .queue();
+            default -> message.replyEmbeds(
+                    Utils.makeEmbed(
+                            "Unknown Command",
+                            "Sorry, I don't recognize that command. Type `" + Setting.PREFIX + "help` " +
+                            "for a list of commands.",
+                            Colors.ERROR)
+                            .build())
+                    .queue();
+        }
+
+        return true;
+
+
     }
 
     private void processPrefixedCommands(MessageReceivedEvent event) {
@@ -191,6 +270,8 @@ public class MessageReceived extends ListenerAdapter {
             name = message.substring(4);
         else if (message.toLowerCase(Locale.ROOT).startsWith("im "))
             name = message.substring(3);
+        else if (message.toLowerCase(Locale.ROOT).startsWith("i am"))
+            name = message.substring(4);
 
         if (name != null && Math.random() < Setting.DAD_BOT_CHANCE) {
             event.getMessage().reply("Hi " + name + ", I'm StatsBot!").queue();

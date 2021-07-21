@@ -1,9 +1,7 @@
 package announcements;
 
-import data.Colors;
-import data.ID;
-import data.Link;
-import data.Setting;
+import commands.faq.FAQEntry;
+import data.*;
 import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Message;
@@ -33,36 +31,53 @@ public class AnnouncementLoader {
      * weights. They will later be used to send announcements in the <code>#apstats</code> channel.
      */
     public static void loadAnnouncements() {
-        announcements.add(new Announcement(
-                "Survey Reminder",
-                "\uD83D\uDCE3",
-                "Have you taken AP Statistics already? Don't forget to complete " +
-                Utils.link("this survey", Link.SURVEY) + " to help future students!",
-                Link.SURVEY,
-                "Take the Survey!",
-                2
-        ).prepareBuild());
+        announcements.add(
+                new Announcement(
+                        "Survey Reminder",
+                        Discord.EMOJI_MEGA,
+                        "Have you taken AP Statistics already? Don't forget to complete " +
+                        Utils.link("this survey", Link.SURVEY) + " to help future students!",
+                        Link.SURVEY,
+                        "Take the Survey!",
+                        2)
+                        .prepareBuild()
+        );
 
-        announcements.add(new Announcement(
-                "Frequently Asked Questions",
-                "\u2754",
-                "Are you new to AP Statistics? Check out " +
-                Utils.link("this FAQ", Link.FAQ) + " from pins with plenty of pre-written " +
-                "answers to common questions.",
-                Link.FAQ,
-                "View the FAQ!",
-                1
-        ));
+        announcements.add(
+                new Announcement(
+                        "Frequently Asked Questions",
+                        Discord.EMOJI_GREY_QUESTION,
+                        "Are you new to AP Statistics? Check out " +
+                        Utils.link("this FAQ", Link.FAQ) + " from pins with plenty of pre-written " +
+                        "answers to common questions.",
+                        Link.FAQ,
+                        "View the FAQ!",
+                        1)
+                        .prepareBuild()
+        );
 
-        announcements.add(new Announcement(
-                "Question Help",
-                "\uD83D\uDCDD",
-                "Looking for help with a specific problem? See our " +
-                Utils.link("guide", Link.FAQ_ASKING_QUESTIONS) + " to asking good questions, " +
-                "and don't forget to use " + Utils.mention(ID.AP_BOT) + "'s `;question` command to ping " +
-                "helpers.",
-                1
-        ));
+        announcements.add(
+                new Announcement(
+                        "Question Help",
+                        Discord.EMOJI_PENCIL,
+                        "Looking for help with a specific problem? See our " +
+                        Utils.link("guide", Link.FAQ_ASKING_QUESTIONS) + " to asking good questions, " +
+                        "and don't forget to use " + Utils.mention(ID.AP_BOT) + "'s `;question` command to ping " +
+                        "helpers.",
+                        1
+                ).prepareBuild()
+        );
+
+        announcements.add(
+                new Announcement(
+                        "Resources",
+                        Discord.EMOJI_BOOKS,
+                        "Looking for high quality AP Statistics resources? Check out our " +
+                        Utils.link("resources list", FAQEntry.entries.get(0).getFullLink()) +
+                        " for college board resources, textbooks, prep books, practice exams, curriculua, and more.",
+                        1
+                ).prepareBuild()
+        );
 
         weightAnnouncements();
         LOG.info("Loaded pre-written announcements");

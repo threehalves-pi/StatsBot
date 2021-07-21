@@ -1,5 +1,6 @@
 package commands;
 
+import commands.faq.FAQEntry;
 import data.Colors;
 import data.ID;
 import data.Link;

@@ -1,6 +1,6 @@
 package data;
 
-import commands.FAQEntry;
+import commands.faq.FAQEntry;
 
 /**
  * This class stores links to common websites that Stats Bot needs to reference in messages.
