@@ -1,6 +1,5 @@
 package events;
 
-import commands.AdminCommands;
 import commands.PrivateCommands;
 import commands.GenericCommands;
 import main.Main;

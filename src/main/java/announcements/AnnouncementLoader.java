@@ -52,7 +52,7 @@ public class AnnouncementLoader {
                         "answers to common questions.",
                         Link.FAQ,
                         "View the FAQ!",
-                        1)
+                        2)
                         .prepareBuild()
         );
 
@@ -75,7 +75,7 @@ public class AnnouncementLoader {
                         "Looking for high quality AP Statistics resources? Check out our " +
                         Utils.link("resources list", FAQEntry.entries.get(0).getFullLink()) +
                         " for college board resources, textbooks, prep books, practice exams, curricula, and more.",
-                        1
+                        2
                 ).prepareBuild()
         );
 
@@ -87,7 +87,7 @@ public class AnnouncementLoader {
                         Utils.link("survey response", Link.SURVEY) + "!",
                         Link.SURVEY,
                         "AP Stats Survey",
-                        2
+                        1
                 ).prepareBuild()
         );
 
