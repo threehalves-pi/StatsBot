@@ -1,5 +1,5 @@
 # Project exclude paths
 /.gradle/
 /build/
-/build/classes/java/main/
 /src/main/resources/token.txt
+/resources/
