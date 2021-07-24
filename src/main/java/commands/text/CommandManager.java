@@ -187,7 +187,10 @@ public class CommandManager {
      */
     public static void delete(long key) {
         try {
-            commandReplies.get(key).delete().queue();
+            commandReplies.get(key).delete().queue(s -> {
+            }, f -> {
+                // It's possible that the message was deleted by an admin. If so, ignore any errors.
+            });
             commandReplies.remove(key);
         } catch (Exception ignored) {
         }

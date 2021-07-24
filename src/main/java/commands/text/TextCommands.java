@@ -99,14 +99,14 @@ public class TextCommands {
         return Utils.addLinkButton(
                 Utils.makeEmbed(
                         "Frequently Asked Questions",
-                        "For help with common stats questions, check out this " +
-                        Utils.link("FAQ", Link.FAQ) + ". Type /faq for more info." +
+                        "For common questions, check out " +
+                        Utils.link("this FAQ", Link.FAQ) + "." +
                         (id == -1 ?
                                 "" :
-                                "\nIn particular, see: __" + FAQEntry.questions.get(id - 1).getHyperlink() + "__"
+                                "\nSee: **" + FAQEntry.questions.get(id - 1).getHyperlink() + "**"
                         ),
-                        Colors.INFO,
-                        "Sent by @" + requestingUser),
+                        Colors.FAQ,
+                        "Type /faq for more info | Requested by @" + requestingUser),
                 id == -1 ? Link.FAQ : FAQEntry.questions.get(id - 1).getFullLink(),
                 "View the FAQ"
         );
