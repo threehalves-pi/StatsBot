@@ -11,6 +11,7 @@ import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.MessageType;
 import net.dv8tion.jda.api.entities.User;
 
@@ -31,6 +32,8 @@ public class TextCommands {
      * @param message the message requesting the faq
      * @param args    the user's message in all lowercase, separated by spaces. <code>args[0]</code> is guaranteed to be
      *                "<code>faq</code>".
+     * @return the {@link CommandReply}, generated using an {@link CommandReply#ofReply(String, MessageChannel, Message,
+     * long) ofReply()} method to be eligible for {@link CommandReply#reply()}
      */
     static CommandReply faqCommand(Message message, String[] args) {
         // This is the message that the bot should reply to when it sends the FAQ link. By default, it's just the

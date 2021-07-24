@@ -39,7 +39,7 @@ public class CommandManager {
         String[] args = contents.toLowerCase(Locale.ROOT).split("\\s+");
 
         // Determine which command was requested, and call the appropriate function
-        commandReplies.put(messageId, getReply(message, args));
+        commandReplies.put(messageId, getReply(message, args, true));
     }
 
     public static void onMessageUpdate(@Nonnull MessageUpdateEvent event) {
@@ -70,7 +70,7 @@ public class CommandManager {
         }
 
         // Update the existing reply to have the contents of a newly generated reply
-        reply.update(getReply(message, args));
+        reply.update(getReply(message, args, false));
     }
 
     public static void onMessageDelete(@Nonnull MessageDeleteEvent event) {
@@ -81,32 +81,81 @@ public class CommandManager {
 
     /**
      * This determines which {@link TextCommands TextCommand} should be called based on the name of a command, calls it,
-     * and returns the resulting {@link CommandReply}.
+     * and returns the resulting {@link CommandReply}. Optionally, this {@link CommandReply} can be sent to Discord.
      *
-     * @param args the arguments of a user's message triggering a command
+     * @param args   the arguments of a user's message triggering a command
+     * @param doSend whether to send the {@link CommandReply} to Discord using the appropriate method (send/reply)
      * @return the {@link CommandReply}
      */
-    private static CommandReply getReply(@Nonnull Message message, @Nonnull String[] args) {
+    private static CommandReply getReply(@Nonnull Message message, @Nonnull String[] args, boolean doSend) {
         // Determine which command was requested, and call the appropriate function
-        return switch (args[0]) {
+        switch (args[0]) {
+
             // Generic commands
-            case "help" -> CommandReply.ofReply("help", TextCommands.help(message), message);
-            case "faq" -> TextCommands.faqCommand(message, args);
+
+            case "help" -> {
+                return send(
+                        CommandReply.ofReply("help", TextCommands.help(message), message),
+                        true, doSend);
+            }
+
+            case "faq" -> {
+                return send(
+                        TextCommands.faqCommand(message, args),
+                        true, doSend);
+            }
+
 
             // Admin commands
-            case "admin" -> EventUtils.isAdmin(message.getAuthor()) ?
-                    CommandReply.ofReply("admin", TextCommands.admin(message), message) :
-                    invalidPermissions("admin", message);
 
-            case "mode" -> EventUtils.isAdmin(message.getAuthor()) ?
-                    CommandReply.ofReply("mode", TextCommands.mode(message, args), message) :
-                    invalidPermissions("mode", message);
+            case "admin" -> {
+                if (EventUtils.isAdmin(message.getAuthor()))
+                    return send(
+                            CommandReply.ofReply("admin", TextCommands.admin(message), message),
+                            true, doSend);
+                else
+                    return send(
+                            invalidPermissions("admin", message),
+                            true, doSend);
+            }
 
-            default -> CommandReply.ofReply(
-                    args[0],
-                    "Sorry, I don't recognize that command. Type `/` for a list of supported slash commands.",
-                    message);
-        };
+            case "mode" -> {
+                if (EventUtils.isAdmin(message.getAuthor()))
+                    return send(
+                            CommandReply.ofReply("mode", TextCommands.mode(message, args), message),
+                            true, doSend);
+                else
+                    return send(
+                            invalidPermissions("mode", message),
+                            true, doSend);
+            }
+
+            default -> {
+                return send(
+                        CommandReply.ofReply(
+                                args[0],
+                                "Sorry, I don't recognize that command. Type `/` for a list of supported " +
+                                "slash commands.",
+                                message),
+                        true, doSend);
+            }
+        }
+    }
+
+    /**
+     * This is a helper method for {@link #getReply(Message, String[], boolean)}. It takes a {@link CommandReply} and
+     * determines whether to send it based on the state of <code>doSend</code>.
+     *
+     * @param commandReply the command to send
+     * @param isReply      <code>true</code> to send command response as a reply to a message; <code>false</code> to
+     *                     merely send it in the channel
+     * @param doSend       whether to actually send the reply to Discord
+     * @return the initial {@link CommandReply} instance
+     */
+    private static CommandReply send(CommandReply commandReply, boolean isReply, boolean doSend) {
+        if (doSend)
+            return isReply ? commandReply.reply() : commandReply.send();
+        return commandReply;
     }
 
     private static CommandReply invalidPermissions(@Nonnull String command, @Nonnull Message message) {
@@ -131,13 +180,15 @@ public class CommandManager {
     }
 
     /**
-     * Delete a {@link CommandReply} based on its key in {@link #commandReplies}.
+     * Delete a {@link CommandReply} based on its key in {@link #commandReplies}. This deletes the message associated
+     * with the reply and the entry in {@link #commandReplies}.
      *
      * @param key they key corresponding to the {@link CommandReply} to be deleted
      */
     public static void delete(long key) {
         try {
             commandReplies.get(key).delete().queue();
+            commandReplies.remove(key);
         } catch (Exception ignored) {
         }
     }
