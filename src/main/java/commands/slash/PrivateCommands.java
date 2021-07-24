@@ -1,4 +1,4 @@
-package commands;
+package commands.slash;
 
 
 import announcements.AnnouncementLoader;

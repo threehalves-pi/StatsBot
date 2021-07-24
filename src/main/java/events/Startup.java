@@ -1,9 +1,9 @@
 package events;
 
-import commands.GenericCommands;
+import commands.slash.GlobalCommands;
 import data.*;
 import announcements.AnnouncementLoader;
-import commands.CommandsRegister;
+import commands.slash.CommandsRegister;
 import main.*;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -40,15 +40,11 @@ public class Startup extends ListenerAdapter {
             CommandsRegister.registerGlobalSlashCommands(Main.JDA.updateCommands());
 
         // Register private and testing slash commands if enabled in settings (and bot mode includes private commands)
-        if (Main.MODE.allows(BotMode.Mode.PRIVATE_SLASH_COMMANDS) && Setting.LOAD_COMMANDS_TESTING)
-            CommandsRegister.registerPrivateSlashCommands(Discord.STATSBOT_CENTRAL.updateCommands());
-
-        // Set global slash command permissions if enabled in settings (and bot mode includes global slash commands)
-        if (Main.MODE.allows(BotMode.Mode.GLOBAL_SLASH_COMMANDS) && Setting.LOAD_GLOBAL_PRIVILEGES)
-            CommandsRegister.setCommandPrivileges();
+        if (Main.MODE.allows(BotMode.Mode.PRIVATE_SLASH_COMMANDS) && Setting.LOAD_COMMANDS_PRIVATE)
+            CommandsRegister.registerPrivateSlashCommands(Discord.STATSBOT_CENTRAL);
 
         // Load FAQ table of contents data and construct /faq response message
-        GenericCommands.loadFAQTableOfContents();
+        GlobalCommands.loadFAQTableOfContents();
 
         // Load all the announcement messages
         AnnouncementLoader.loadAnnouncements();

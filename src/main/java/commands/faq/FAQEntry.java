@@ -1,6 +1,6 @@
 package commands.faq;
 
-import commands.GenericCommands;
+import commands.slash.GlobalCommands;
 import data.Link;
 import main.Utils;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public record FAQEntry(String type, String text, String link) {
     /**
      * This is the list of all {@link FAQEntry} instances imported from <code>faq.csv</code>. It is filled on startup by
-     * {@link GenericCommands#loadFAQTableOfContents()}.
+     * {@link GlobalCommands#loadFAQTableOfContents()}.
      */
     public static final List<FAQEntry> entries = new ArrayList<>();
 

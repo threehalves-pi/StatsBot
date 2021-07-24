@@ -1,7 +1,7 @@
 package events;
 
-import commands.PrivateCommands;
-import commands.GenericCommands;
+import commands.slash.PrivateCommands;
+import commands.slash.GlobalCommands;
 import main.Main;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -15,14 +15,11 @@ public class SlashCommand extends ListenerAdapter {
         switch (event.getName()) {
 
             // Global generic commands
-            case "statsbot" -> GenericCommands.statsbot(event);
-            case "survey" -> GenericCommands.survey(event);
-            case "help" -> GenericCommands.help(event);
-            case "source" -> GenericCommands.source(event);
-            case "faq" -> GenericCommands.faq(event);
-
-            // Global admin commands
-            case "link" -> AdminCommands.link(event);
+            case "statsbot" -> GlobalCommands.statsbot(event);
+            case "survey" -> GlobalCommands.survey(event);
+            case "help" -> GlobalCommands.help(event);
+            case "source" -> GlobalCommands.source(event);
+            case "faq" -> GlobalCommands.faq(event);
 
             // Private commands
             case "panel" -> PrivateCommands.panel(event);

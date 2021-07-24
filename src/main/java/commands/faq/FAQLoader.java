@@ -1,6 +1,6 @@
 package commands.faq;
 
-import commands.GenericCommands;
+import commands.slash.GlobalCommands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 public class FAQLoader {
     /**
      * This is the list of all {@link FAQEntry} instances imported from <code>faq.csv</code>. It is filled on startup by
-     * {@link GenericCommands#loadFAQTableOfContents()}.
+     * {@link GlobalCommands#loadFAQTableOfContents()}.
      */
     private static final List<FAQEntry> entries = new ArrayList<>();
 

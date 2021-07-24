@@ -20,7 +20,7 @@ public class Main {
 
         JDA = JDABuilder.createDefault(token)
                 .enableIntents(GatewayIntent.GUILD_MEMBERS)
-                .addEventListeners(new MessageReceived())
+                .addEventListeners(new OnMessage())
                 .addEventListeners(new Startup())
                 .addEventListeners(new SlashCommand())
                 .addEventListeners(new ButtonClick())

@@ -1,17 +1,20 @@
 package events;
 
 import announcements.AnnouncementLoader;
-import commands.TextCommands;
+import commands.text.CommandManager;
 import data.*;
 import main.Main;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.Locale;
 
-public class MessageReceived extends ListenerAdapter {
+public class OnMessage extends ListenerAdapter {
 
     /**
      * This method is called whenever a message in sent in any Discord channel (whether a server or direct message).
@@ -46,7 +49,25 @@ public class MessageReceived extends ListenerAdapter {
             return;
 
         // If the message uses the bot's prefix, check for recognized commands
-        TextCommands.processPrefixedCommands(event);
+        CommandManager.onMessageReceived(event);
+    }
+
+    /**
+     * This method is called whenever a message in any Discord channel is edited.
+     * @param event the event object with the message data
+     */
+    @Override
+    public void onMessageUpdate(@Nonnull MessageUpdateEvent event) {
+        CommandManager.onMessageUpdate(event);
+    }
+
+    /**
+     * This method is called whenever a Discord message is deleted.
+     * @param event the event object with the message data
+     */
+    @Override
+    public void onMessageDelete(@Nonnull MessageDeleteEvent event) {
+        CommandManager.onMessageDelete(event);
     }
 
     /**

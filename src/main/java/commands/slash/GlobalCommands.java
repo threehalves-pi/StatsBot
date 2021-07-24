@@ -1,4 +1,4 @@
-package commands;
+package commands.slash;
 
 import commands.faq.FAQEntry;
 import data.Colors;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class GenericCommands {
+public class GlobalCommands {
     /**
      * This is the message sent in response to the <code>/faq</code> command. It is created by {@link
      * #loadFAQTableOfContents()} on startup.

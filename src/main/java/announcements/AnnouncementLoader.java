@@ -39,7 +39,7 @@ public class AnnouncementLoader {
                         Utils.link("this survey", Link.SURVEY) + " to help future students!",
                         Link.SURVEY,
                         "Take the Survey!",
-                        2)
+                        3)
                         .prepareBuild()
         );
 
@@ -52,7 +52,7 @@ public class AnnouncementLoader {
                         "answers to common questions.",
                         Link.FAQ,
                         "View the FAQ!",
-                        2)
+                        3)
                         .prepareBuild()
         );
 
@@ -75,7 +75,7 @@ public class AnnouncementLoader {
                         "Looking for high quality AP Statistics resources? Check out our " +
                         Utils.link("resources list", FAQEntry.entries.get(0).getFullLink()) +
                         " for college board resources, textbooks, prep books, practice exams, curricula, and more.",
-                        2
+                        3
                 ).prepareBuild()
         );
 
@@ -87,6 +87,19 @@ public class AnnouncementLoader {
                         Utils.link("survey response", Link.SURVEY) + "!",
                         Link.SURVEY,
                         "AP Stats Survey",
+                        1
+                ).prepareBuild()
+        );
+
+        announcements.add(
+                new Announcement(
+                        "FAQ Feedback",
+                        "",
+                        "Have you been using the " + Utils.link("AP Statistics FAQ", Link.FAQ) + "? Don't " +
+                        "forget to fill out the " + Utils.link("FAQ feedback survey", Link.FAQ_FEEDBACK) +
+                        " to help us improve it.",
+                        Link.FAQ_FEEDBACK,
+                        "FAQ Feedback Survey",
                         1
                 ).prepareBuild()
         );

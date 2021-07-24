@@ -16,8 +16,7 @@ public class Setting {
 
     // Startup settings
     public static boolean LOAD_COMMANDS_GLOBAL = false;
-    public static boolean LOAD_COMMANDS_TESTING = false;
-    public static boolean LOAD_GLOBAL_PRIVILEGES = false;
+    public static boolean LOAD_COMMANDS_PRIVATE = false;
 
     // Announcement settings
     public static int ANNOUNCEMENT_DELAY = -1;
@@ -54,8 +53,7 @@ public class Setting {
 
             // Startup settings
             LOAD_COMMANDS_GLOBAL = Boolean.parseBoolean(properties.getProperty("load_commands_global"));
-            LOAD_COMMANDS_TESTING = Boolean.parseBoolean(properties.getProperty("load_commands_testing"));
-            LOAD_GLOBAL_PRIVILEGES = Boolean.parseBoolean(properties.getProperty("load_global_privileges"));
+            LOAD_COMMANDS_PRIVATE = Boolean.parseBoolean(properties.getProperty("load_commands_private"));
 
             // Miscellaneous settings
             DAD_BOT_CHANCE = Double.parseDouble(properties.getProperty("dad_bot_chance"));

@@ -17,6 +17,11 @@ public class Link {
     public static final String FAQ = "https://bit.ly/apstats-faq";
 
     /**
+     * The link to the FAQ Feedback survey
+     */
+    public static final String FAQ_FEEDBACK = "https://forms.gle/cCuRbiSnHtLwntXn9";
+
+    /**
      * This links to the header "<code>How do I ask a good question?</code>" on the FAQ document.
      */
     public static final String FAQ_ASKING_QUESTIONS = "https://docs.google.com/document/d/1vzEopbD7GTql207P3lGk-egAjognligz1LpXyBAMCkM/edit#heading=h.5aswuxz5k9kq";
