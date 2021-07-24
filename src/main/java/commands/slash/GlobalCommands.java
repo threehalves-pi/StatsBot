@@ -172,6 +172,13 @@ public class GlobalCommands {
                 }
             }
 
+            fields.add(Utils.makeField(
+                    "",
+                    "__**Submit Feedback**__\n" +
+                    "Enjoying the FAQ? Help us improve it by completing " +
+                    Utils.link("this survey", Link.FAQ_FEEDBACK) + "!")
+            );
+
             // Build the actual embed
             faqMessage = Utils.addLinkButton(
                     Utils.makeEmbed(
