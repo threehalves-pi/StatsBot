@@ -54,19 +54,29 @@ public class OnMessage extends ListenerAdapter {
 
     /**
      * This method is called whenever a message in any Discord channel is edited.
+     *
      * @param event the event object with the message data
      */
     @Override
     public void onMessageUpdate(@Nonnull MessageUpdateEvent event) {
+        // Ignore messages based on their origin and the current BotMode
+        if (Main.MODE.ignoreEvent(event))
+            return;
+
         CommandManager.onMessageUpdate(event);
     }
 
     /**
      * This method is called whenever a Discord message is deleted.
+     *
      * @param event the event object with the message data
      */
     @Override
     public void onMessageDelete(@Nonnull MessageDeleteEvent event) {
+        // Ignore messages based on their origin and the current BotMode
+        if (Main.MODE.ignoreEvent(event))
+            return;
+
         CommandManager.onMessageDelete(event);
     }
 

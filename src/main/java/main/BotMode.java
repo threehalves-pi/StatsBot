@@ -7,7 +7,9 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageUpdateEvent;
 import net.dv8tion.jda.api.events.message.react.GenericMessageReactionEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -209,9 +211,7 @@ public class BotMode {
     public <T extends Event> boolean ignoreEvent(T event) {
         // If the event is an incoming message or button click, determine if it is a DM,
         // StatsBot Central message, or other server, and respond accordingly.
-        if (event instanceof MessageReceivedEvent e)
-            return ignoreEvent(e.isFromGuild(), e.isFromGuild() ? e.getGuild() : null);
-        if (event instanceof GenericMessageReactionEvent e)
+        if (event instanceof GenericMessageEvent e)
             return ignoreEvent(e.isFromGuild(), e.isFromGuild() ? e.getGuild() : null);
         if (event instanceof ButtonClickEvent e)
             return ignoreEvent(e.isFromGuild(), e.getGuild());
