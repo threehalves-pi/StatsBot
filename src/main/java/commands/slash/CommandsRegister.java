@@ -54,29 +54,26 @@ public class CommandsRegister {
             list.add(new CommandData("panel", "Update the StatsBot control panel"));
 
             list.add(new CommandData("announcement", "View and trigger announcement messages")
-                    .addSubcommandGroups(
-                            new SubcommandGroupData("control", "View and send announcements")
-                                    .addSubcommands(
-                                            new SubcommandData(
-                                                    "list",
-                                                    "List all announcement message IDs"),
-                                            new SubcommandData(
-                                                    "get",
-                                                    "View a specific announcement")
-                                                    .addOption(
-                                                            OptionType.INTEGER,
-                                                            "id",
-                                                            "The announcement id--see /announcement list " +
-                                                            "for a list of ids."),
-                                            new SubcommandData(
-                                                    "push",
-                                                    "Send an announcement to the stats channel")
-                                                    .addOption(
-                                                            OptionType.INTEGER,
-                                                            "id",
-                                                            "The announcement id--see /announcement " +
-                                                            "list for a list of ids.")
-                                    )
+                    .addSubcommands(
+                            new SubcommandData(
+                                    "list",
+                                    "List all announcement message IDs"),
+                            new SubcommandData(
+                                    "get",
+                                    "View a specific announcement")
+                                    .addOption(
+                                            OptionType.INTEGER,
+                                            "id",
+                                            "The announcement id--see /announcement list " +
+                                            "for a list of ids."),
+                            new SubcommandData(
+                                    "push",
+                                    "Send an announcement to the stats channel")
+                                    .addOption(
+                                            OptionType.INTEGER,
+                                            "id",
+                                            "The announcement id--see /announcement " +
+                                            "list for a list of ids.")
                     ).setDefaultEnabled(false)
             );
 
