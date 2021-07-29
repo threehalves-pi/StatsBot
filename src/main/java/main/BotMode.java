@@ -6,6 +6,7 @@ import events.Startup;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.events.Event;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
+import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 import net.dv8tion.jda.api.events.message.GenericMessageEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -213,8 +214,6 @@ public class BotMode {
         // StatsBot Central message, or other server, and respond accordingly.
         if (event instanceof GenericMessageEvent e)
             return ignoreEvent(e.isFromGuild(), e.isFromGuild() ? e.getGuild() : null);
-        if (event instanceof ButtonClickEvent e)
-            return ignoreEvent(e.isFromGuild(), e.getGuild());
 
         // If the event is a slash command, check the source
         if (event instanceof SlashCommandEvent e) {
@@ -223,6 +222,11 @@ public class BotMode {
             else
                 return ignores(Mode.GLOBAL_SLASH_COMMANDS);
         }
+
+        // If the event is another (non slash command) interaction, treat it like a generic message event
+        if (event instanceof GenericInteractionCreateEvent e)
+            return ignoreEvent(e.isFromGuild(), e.getGuild());
+
 
         // If the event type is unknown, do not ignore it
         return false;

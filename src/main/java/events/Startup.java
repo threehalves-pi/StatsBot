@@ -1,5 +1,6 @@
 package events;
 
+import commands.slash.Diagram;
 import commands.slash.GlobalCommands;
 import data.*;
 import announcements.AnnouncementLoader;
@@ -45,6 +46,9 @@ public class Startup extends ListenerAdapter {
 
         // Load FAQ table of contents data and construct /faq response message
         GlobalCommands.loadFAQTableOfContents();
+
+        // Load the diagram resources for /diagram
+        Diagram.loadDiagrams();
 
         // Load all the announcement messages
         AnnouncementLoader.loadAnnouncements();

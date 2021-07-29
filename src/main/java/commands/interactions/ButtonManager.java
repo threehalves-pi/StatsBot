@@ -1,41 +1,58 @@
-package events;
+package commands.interactions;
 
-import data.Discord;
-import main.Main;
+import commands.slash.Diagram;
+import data.Colors;
 import data.Setting;
+import events.EventUtils;
+import events.OnInteraction;
+import main.Main;
+import main.Utils;
 import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.ButtonClickEvent;
-import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;
 import net.dv8tion.jda.api.managers.Presence;
-import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
 import java.util.List;
+import java.util.Objects;
 
-public class ButtonClick extends ListenerAdapter {
-    public void onButtonClick(@NotNull ButtonClickEvent event) {
-        if (Main.MODE.ignoreEvent(event))
-            return;
+/**
+ * This class contains the methods for processing all {@link ButtonClickEvent ButtonClickEvents}. Those methods are
+ * called by {@link OnInteraction#onButtonClick(ButtonClickEvent)}. If a number of button responses are implemented,
+ * this class may be separated into public and private events (at minimum).
+ */
+public class ButtonManager {
+    public static void diagram(@Nonnull ButtonClickEvent event) {
+        Diagram diagram;
+        String value = event.getComponentId().substring(8);
 
-        // If the button ID doesn't contain at least one colon, it's invalid and should be rejected
-        if (!event.getComponentId().contains(":")) {
-            buttonError(event);
+        try {
+            diagram = Diagram.getDiagram(value);
+            assert diagram != null;
+        } catch (Exception ignore) {
+            event.reply("Error. Failed to identify desired diagram. Please try again later.")
+                    .setEphemeral(true).queue();
             return;
         }
 
-        if (event.getComponentId().startsWith("panel"))
-            runPanelButtons(event);
-        else
-            buttonError(event);
+        event.replyEmbeds(Utils.makeEmbed(
+                diagram.name(),
+                "",
+                Colors.INFO,
+                "Sent by " + Objects.requireNonNull(event.getMember()).getEffectiveName() + " | /diagram")
+                .setImage(diagram.getFullLink())
+                .build()
+        ).queue();
     }
 
-    public void runPanelButtons(@NotNull ButtonClickEvent event) {
+    public static void runPanelButtons(@Nonnull ButtonClickEvent event) {
         // User must be an admin to use panel controls
         if (!EventUtils.isAdmin(event.getUser())) {
-            buttonError(event, "Error. You must be an administrator to use the control panel.");
+            OnInteraction.buttonError(event, "Error. You must be an administrator to use the control panel.");
             return;
         }
 
@@ -43,7 +60,7 @@ public class ButtonClick extends ListenerAdapter {
 
         // All panel buttons have 3 section ids.
         if (id.length != 3) {
-            buttonError(event);
+            OnInteraction.buttonError(event);
             return;
         }
 
@@ -52,7 +69,7 @@ public class ButtonClick extends ListenerAdapter {
         }
     }
 
-    public void updateStatus(@NotNull ButtonClickEvent event, String id) {
+    public static void updateStatus(@Nonnull ButtonClickEvent event, String id) {
         // Get current presence and status
         Presence presence = Main.JDA.getPresence();
         OnlineStatus oldStatus = presence.getStatus();
@@ -62,7 +79,7 @@ public class ButtonClick extends ListenerAdapter {
 
         // If the status is already set to the new status, there was an error. Otherwise, update it.
         if (oldStatus == newStatus)
-            buttonError(event, "Error. I am already set to " + newStatus.getKey() + ".");
+            OnInteraction.buttonError(event, "Error. I am already set to " + newStatus.getKey() + ".");
         else {
             //event.deferReply().queue();
 
@@ -84,24 +101,12 @@ public class ButtonClick extends ListenerAdapter {
 
                 // Update the message with the new buttons
                 oldMessage.editMessage(message.build()).queue();
-                buttonSuccess(event, "Status updated successfully.");
+                OnInteraction.buttonSuccess(event, "Status updated successfully.");
 
             } catch (Exception e) {
                 e.printStackTrace();
-                buttonError(event);
+                OnInteraction.buttonError(event);
             }
         }
-    }
-
-    public void buttonError(@NotNull ButtonClickEvent event) {
-        buttonError(event, "An unknown error occurred. Try again later.");
-    }
-
-    public void buttonError(@NotNull ButtonClickEvent event, @NotNull String error) {
-        event.reply(Discord.RED_X + " " + error).setEphemeral(true).queue();
-    }
-
-    public void buttonSuccess(@NotNull ButtonClickEvent event, @NotNull String message) {
-        event.reply(Discord.CHECK + " " + message).setEphemeral(true).queue();
     }
 }

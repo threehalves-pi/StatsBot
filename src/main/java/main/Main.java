@@ -23,7 +23,7 @@ public class Main {
                 .addEventListeners(new OnMessage())
                 .addEventListeners(new Startup())
                 .addEventListeners(new SlashCommand())
-                .addEventListeners(new ButtonClick())
+                .addEventListeners(new OnInteraction())
                 .addEventListeners(new OnReaction())
                 .build();
     }

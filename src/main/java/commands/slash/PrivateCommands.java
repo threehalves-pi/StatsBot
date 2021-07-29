@@ -7,20 +7,24 @@ import data.ID;
 import events.EventUtils;
 import main.Main;
 import main.Utils;
+import net.dv8tion.jda.api.MessageBuilder;
 import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
+import net.dv8tion.jda.api.interactions.components.ActionRow;
 import net.dv8tion.jda.api.interactions.components.Button;
 
+import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class PrivateCommands {
 
-    public static void testing(SlashCommandEvent event) {
+    public static void testing(@Nonnull SlashCommandEvent event) {
         Utils.replyEphemeral(event, "Testing...");
     }
 
-    public static void panel(SlashCommandEvent event) {
+    public static void panel(@Nonnull SlashCommandEvent event) {
         OnlineStatus status = Main.JDA.getPresence().getStatus();
         event
                 .reply("**Set Discord Status**")
@@ -36,7 +40,20 @@ public class PrivateCommands {
                 .queue();
     }
 
-    public static void announcement(SlashCommandEvent event) {
+    public static void diagram(@Nonnull SlashCommandEvent event) {
+        Message message = new MessageBuilder("Select a diagram to view:")
+                .setActionRows(
+                        ActionRow.of(Diagram.selectionMenu)
+                ).build();
+
+        event.deferReply().setEphemeral(true).queue(
+                h -> h.editOriginal(message).queue(
+                        k -> Diagram.diagramResponses.put(k.getIdLong(), h)
+                )
+        );
+    }
+
+    public static void announcement(@Nonnull SlashCommandEvent event) {
         String sub = event.getSubcommandName();
 
         if ("list".equals(sub)) {

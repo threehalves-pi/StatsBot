@@ -24,6 +24,7 @@ public class SlashCommand extends ListenerAdapter {
             // Private commands
             case "panel" -> PrivateCommands.panel(event);
             case "announcement" -> PrivateCommands.announcement(event);
+            case "diagram" -> PrivateCommands.diagram(event);
             case "testing" -> PrivateCommands.testing(event);
 
             // Unknown command

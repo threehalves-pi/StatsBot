@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.interactions.commands.Command;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.CommandData;
 import net.dv8tion.jda.api.interactions.commands.build.SubcommandData;
-import net.dv8tion.jda.api.interactions.commands.build.SubcommandGroupData;
 import net.dv8tion.jda.api.interactions.commands.privileges.CommandPrivilege;
 import net.dv8tion.jda.api.requests.restaction.CommandListUpdateAction;
 import net.dv8tion.jda.internal.utils.JDALogger;
@@ -51,7 +50,17 @@ public class CommandsRegister {
         List<CommandData> list = new ArrayList<>();
 
         if (guild.getIdLong() == ID.STATSBOT_CENTRAL_GUILD) {
+            // Public commands
+
             list.add(new CommandData("panel", "Update the StatsBot control panel"));
+
+            list.add(new CommandData(
+                    "diagram",
+                    "see one of the preloaded AP Stats diagrams"));
+
+            list.add(new CommandData("testing", "Slash command tester"));
+
+            // Private commands with privileges
 
             list.add(new CommandData("announcement", "View and trigger announcement messages")
                     .addSubcommands(
@@ -76,8 +85,6 @@ public class CommandsRegister {
                                             "list for a list of ids.")
                     ).setDefaultEnabled(false)
             );
-
-            list.add(new CommandData("testing", "Slash command tester"));
 
             guild.updateCommands().addCommands(list).queue(
                     commandList -> {
